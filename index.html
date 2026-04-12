@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>温哥华 5·1 行动 — 终结安调拖延 | Vancouver May 1 Action</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #C0392B;
+      --red-dark: #96281B;
+      --red-light: #E74C3C;
+      --gold: #D4A017;
+      --gold-light: #F0C040;
+      --ink: #1A1008;
+      --ink-mid: #3D2B1F;
+      --paper: #FAF6F0;
+      --paper-warm: #F5EDE0;
+      --cream: #EDE3D4;
+      --gray: #8B7B6E;
+      --white: #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250, 246, 240, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--cream);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 32px;
+    }
+    .nav-logo {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 700; font-size: 1rem;
+      color: var(--red);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--ink-mid); text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--red); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(192,57,43,0.08) 0%, transparent 70%),
+        linear-gradient(180deg, var(--paper) 0%, var(--paper-warm) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(192,57,43,0.04) 60px, rgba(192,57,43,0.04) 61px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(192,57,43,0.04) 60px, rgba(192,57,43,0.04) 61px);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--red);
+      color: white;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 2px;
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-cn {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 12px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .hero-en {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.2rem, 3.5vw, 2rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--red);
+      margin-bottom: 40px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-date-box {
+      display: inline-flex; flex-direction: column; align-items: center;
+      border: 2px solid var(--red);
+      padding: 20px 40px; margin-bottom: 40px;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .hero-date-big {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: var(--red); line-height: 1;
+    }
+    .hero-date-sub {
+      font-size: 0.85rem; color: var(--gray);
+      letter-spacing: 0.08em; margin-top: 6px;
+    }
+    .hero-location {
+      font-size: 0.95rem; color: var(--ink-mid);
+      margin-bottom: 48px;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+    .hero-location strong { color: var(--red); }
+    .hero-cta {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.7s 0.5s ease both;
+    }
+    .btn-primary {
+      background: var(--red); color: white;
+      padding: 14px 32px; border-radius: 2px;
+      font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em;
+      text-decoration: none; transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); }
+    .btn-outline {
+      border: 2px solid var(--ink); color: var(--ink);
+      padding: 12px 30px; border-radius: 2px;
+      font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-outline:hover { background: var(--ink); color: white; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 80px 24px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .container-wide { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--red);
+      margin-bottom: 16px; display: block;
+    }
+    h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    h2 .en {
+      display: block;
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.6em; font-style: italic;
+      color: var(--gray); font-weight: 400;
+      margin-top: 4px;
+    }
+    .divider {
+      width: 48px; height: 3px; background: var(--red);
+      margin: 24px 0;
+    }
+
+    /* ── WHY ── */
+    .why { background: var(--ink); color: var(--paper); }
+    .why h2 { color: var(--paper); }
+    .why h2 .en { color: var(--gray); }
+    .why .divider { background: var(--gold); }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px; margin-top: 48px;
+    }
+    .why-card {
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+    }
+    .why-card-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem; color: var(--gold);
+      opacity: 0.4; line-height: 1;
+      margin-bottom: 8px;
+    }
+    .why-card h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.05rem; font-weight: 600;
+      margin-bottom: 10px; color: var(--paper);
+    }
+    .why-card p { font-size: 0.9rem; line-height: 1.7; color: #C4B9AD; }
+
+    /* ── DEMANDS ── */
+    .demands { background: var(--paper-warm); }
+    .demands-list { margin-top: 48px; }
+    .demand-item {
+      display: flex; gap: 24px; align-items: flex-start;
+      padding: 28px 0; border-bottom: 1px solid var(--cream);
+    }
+    .demand-item:first-child { border-top: 1px solid var(--cream); }
+    .demand-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem; color: var(--red); opacity: 0.3;
+      line-height: 1; flex-shrink: 0; width: 48px;
+    }
+    .demand-body h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.1rem; font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .demand-body p { font-size: 0.9rem; line-height: 1.75; color: var(--ink-mid); }
+
+    /* ── EVENT ── */
+    .event { background: var(--red); color: white; }
+    .event h2, .event .section-label { color: white; }
+    .event h2 .en { color: rgba(255,255,255,0.5); }
+    .event .divider { background: var(--gold-light); }
+    .event-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; margin-top: 48px;
+    }
+    @media (max-width: 640px) { .event-grid { grid-template-columns: 1fr; } }
+    .event-detail { margin-bottom: 24px; }
+    .event-detail-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.55);
+      margin-bottom: 6px;
+    }
+    .event-detail-val {
+      font-size: 1.1rem; font-weight: 500;
+    }
+    .schedule { list-style: none; }
+    .schedule li {
+      display: flex; gap: 16px; padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      font-size: 0.9rem;
+    }
+    .schedule li .time {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem; color: var(--gold-light);
+      width: 60px; flex-shrink: 0;
+    }
+
+    /* ── JOIN / ROLES ── */
+    .join { background: var(--paper); }
+    .roles-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px; margin-top: 40px;
+    }
+    .role-card {
+      background: var(--paper-warm);
+      border: 1px solid var(--cream);
+      padding: 20px 20px;
+      border-radius: 2px;
+    }
+    .role-icon { font-size: 1.6rem; margin-bottom: 8px; }
+    .role-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .role-card p { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+    .role-required {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--red); color: white;
+      padding: 2px 6px; border-radius: 2px; margin-top: 8px;
+    }
+
+    /* ── MEDIA / SUPPORT ── */
+    .support { background: var(--cream); }
+    .media-logos {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      margin-top: 32px;
+    }
+    .media-tag {
+      background: white; border: 1px solid var(--cream);
+      padding: 8px 16px; border-radius: 2px;
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--ink-mid);
+    }
+
+    /* ── FAQ ── */
+    .faq { background: var(--paper-warm); }
+    .faq-list { margin-top: 40px; }
+    .faq-item {
+      border-bottom: 1px solid var(--cream);
+      padding: 24px 0;
+    }
+    .faq-q {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1rem; font-weight: 600;
+      margin-bottom: 10px; cursor: pointer;
+    }
+    .faq-a { font-size: 0.9rem; line-height: 1.8; color: var(--ink-mid); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink); color: var(--paper);
+      padding: 48px 24px;
+      text-align: center;
+    }
+    footer .logo-big {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--red); margin-bottom: 8px;
+    }
+    footer p { font-size: 0.82rem; color: var(--gray); line-height: 1.8; margin-top: 16px; }
+    .social-links { display: flex; gap: 16px; justify-content: center; margin-top: 20px; }
+    .social-links a {
+      color: var(--gray); text-decoration: none;
+      font-size: 0.82rem; letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .social-links a:hover { color: var(--gold-light); }
+
+    /* ── ANIMATION ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── COUNTER BAR ── */
+    .counter-bar {
+      background: var(--ink-mid); color: white;
+      padding: 12px 24px;
+      display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+    }
+    .counter-item { text-align: center; }
+    .counter-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem; color: var(--gold-light); line-height: 1;
+    }
+    .counter-label { font-size: 0.72rem; letter-spacing: 0.1em; color: #C4B9AD; }
+
+    /* ── MOBILE NAV ── */
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      nav { padding: 12px 20px; }
+    }
+    @media (max-width: 480px) {
+      .demand-num { display: none; }
+      .demand-item { gap: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">温哥华 5·1 行动</a>
+  <ul class="nav-links">
+    <li><a href="#why">为什么</a></li>
+    <li><a href="#demands">诉求</a></li>
+    <li><a href="#event">活动详情</a></li>
+    <li><a href="#join">加入我们</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-badge">温哥华 · IRCC 办公室前 · 和平抗议</span>
+  <h1 class="hero-cn">终结安调拖延</h1>
+  <p class="hero-en">End the Endless Wait — Vancouver Rises</p>
+
+  <div class="hero-date-box">
+    <div class="hero-date-big">2026 · 五月一日</div>
+    <div class="hero-date-sub">Friday, May 1, 2026 &nbsp;·&nbsp; 9:00 AM – 12:00 PM</div>
+  </div>
+
+  <p class="hero-location">
+    <strong>1148 Hornby St, Vancouver, BC</strong><br/>
+    IRCC 温哥华办公楼前 &nbsp;·&nbsp; Vancouver IRCC Office
+  </p>
+
+  <div class="hero-cta">
+    <a class="btn-primary" href="#join">📣 加入我们 / Join Us</a>
+    <a class="btn-outline" href="#event">活动详情 / Event Details</a>
+  </div>
+</section>
+
+<!-- COUNTER BAR -->
+<div class="counter-bar">
+  <div class="counter-item">
+    <div class="counter-num">30+</div>
+    <div class="counter-label">月 · 平均等待时间<br/>Months Avg. Wait</div>
+  </div>
+  <div class="counter-item">
+    <div class="counter-num">23,000+</div>
+    <div class="counter-label">PR 安调积压案<br/>PR Applications in Backlog</div>
+  </div>
+  <div class="counter-item">
+    <div class="counter-num">110</div>
+    <div class="counter-label">天 · 官方服务标准<br/>Days Official Standard</div>
+  </div>
+  <div class="counter-item">
+    <div class="counter-num">55%</div>
+    <div class="counter-label">PR 申请超期积压率<br/>PR Applications in Backlog</div>
+  </div>
+</div>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="container">
+    <span class="section-label">为什么我们站出来 · Why We Stand</span>
+    <h2>问题没有解决<span class="en">The Crisis Has Not Ended</span></h2>
+    <div class="divider"></div>
+    <p style="color:#C4B9AD; line-height:1.8; max-width:640px;">
+      2026年3月13日，数百人走上渥太华国会山，用行动告诉 IRCC：安调拖延不可接受。那次游行有效——但问题仍在。现在，温哥华的我们站出来，继续施压，直到改变发生。
+    </p>
+    <p style="color:#C4B9AD; line-height:1.8; max-width:640px; margin-top:12px;">
+      On March 13, 2026, hundreds marched to Parliament Hill. The protest worked — but the crisis continues. Now Vancouver rises, to keep the pressure on IRCC, CSIS, and CBSA until real change happens.
+    </p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-card-num">01</div>
+        <h3>极端拖延，超乎想象</h3>
+        <p>安全背景调查平均等待超过30个月，远超官方110天服务标准，是应有时限的8倍以上。</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card-num">02</div>
+        <h3>313证明：行动有效</h3>
+        <p>3月13日渥太华游行吸引大量媒体关注，推动国会提出 e-7259 请愿，证明有组织的抗议能够带来改变。</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card-num">03</div>
+        <h3>温哥华必须发声</h3>
+        <p>BC省有大量受影响申请人。全国联动、持续施压，才能让 IRCC 无法忽视这场危机。</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card-num">04</div>
+        <h3>人道代价正在发生</h3>
+        <p>家庭分离、失去合法身份、心理危机、职业停滞——这些不是数字，是真实发生在我们邻居身上的故事。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMANDS -->
+<section class="demands" id="demands">
+  <div class="container">
+    <span class="section-label">我们的诉求 · Our Demands</span>
+    <h2>我们要求<span class="en">What We Are Calling For</span></h2>
+    <div class="divider"></div>
+    <p style="color:var(--ink-mid); line-height:1.8; max-width:640px;">
+      与313一致，我们要求 IRCC / CSIS / CBSA 切实回应以下三点核心诉求：
+    </p>
+
+    <div class="demands-list">
+      <div class="demand-item">
+        <div class="demand-num">01</div>
+        <div class="demand-body">
+          <h3>🕐 加快安调速度 — 设定明确时限</h3>
+          <p>要求 IRCC、CSIS、CBSA 在合理时间内完成安全背景调查，并向申请人公开处理阶段与预计完成时间。已完成 CSIS 审查的申请人，CBSA 应在30天内完成最终处理。</p>
+        </div>
+      </div>
+      <div class="demand-item">
+        <div class="demand-num">02</div>
+        <div class="demand-body">
+          <h3>🔍 提高透明度 — 主动告知进展</h3>
+          <p>要求每90天主动更新案件状态，包括当前由哪一机构处理、处于何阶段、预计何时完成。申请人有权利了解自己案件的进展。</p>
+        </div>
+      </div>
+      <div class="demand-item">
+        <div class="demand-num">03</div>
+        <div class="demand-body">
+          <h3>⚖️ 建立问责机制 — 设立独立监督</h3>
+          <p>设立独立移民监察专员，有权调查 IRCC 处理拖延、强制回应申请人投诉；建立 CBSA 移民安全审查独立监督机构，确保问责有依据、有后果。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENT DETAILS -->
+<section class="event" id="event">
+  <div class="container">
+    <span class="section-label">活动详情 · Event Details</span>
+    <h2>5·1 温哥华行动<span class="en">May 1 Vancouver Action</span></h2>
+    <div class="divider"></div>
+
+    <div class="event-grid">
+      <div>
+        <div class="event-detail">
+          <div class="event-detail-label">日期 Date</div>
+          <div class="event-detail-val">2026年5月1日（周五）<br/>Friday, May 1, 2026</div>
+        </div>
+        <div class="event-detail">
+          <div class="event-detail-label">时间 Time</div>
+          <div class="event-detail-val">上午 9:00 — 中午 12:00</div>
+        </div>
+        <div class="event-detail">
+          <div class="event-detail-label">地点 Location</div>
+          <div class="event-detail-val">IRCC 温哥华办公楼<br/>1148 Hornby St, Vancouver, BC</div>
+        </div>
+        <div class="event-detail">
+          <div class="event-detail-label">形式 Format</div>
+          <div class="event-detail-val">和平举牌 + 喊口号 + 演讲（如有）<br/>Peaceful rally, signs, chants, speakers</div>
+        </div>
+        <div class="event-detail">
+          <div class="event-detail-label">预计人数</div>
+          <div class="event-detail-val">30–50人，越多越好</div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:16px;">当日流程 Schedule</div>
+        <ul class="schedule">
+          <li><span class="time">8:45</span><span>各岗位人员提前到场布置</span></li>
+          <li><span class="time">9:00</span><span>集合，发放物资与须知卡片</span></li>
+          <li><span class="time">9:15</span><span>开场，现场领队带领喊口号</span></li>
+          <li><span class="time">9:15–11:30</span><span>举牌 + 口号，穿插发言人演讲<br/><small style="opacity:0.6">社媒实时发布</small></span></li>
+          <li><span class="time">11:30</span><span>结束发言，告知下一步行动</span></li>
+          <li><span class="time">12:00</span><span>有序散场</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section class="join" id="join">
+  <div class="container">
+    <span class="section-label">加入我们 · Join Us</span>
+    <h2>我们需要你<span class="en">Every Voice Counts</span></h2>
+    <div class="divider"></div>
+    <p style="color:var(--ink-mid); line-height:1.8; max-width:600px; margin-bottom:40px;">
+      无论你是受影响的申请人、支持者、还是关心移民公正的每一个人，我们都欢迎你。带上你的故事，和我们一起站出来。
+    </p>
+
+    <div style="text-align:center; margin-bottom:56px;">
+      <a class="btn-primary" href="https://forms.gle" style="font-size:1rem; padding:16px 40px;">
+        📋 报名参与 / Register to Join
+      </a>
+      <p style="margin-top:12px; font-size:0.82rem; color:var(--gray);">点击填写报名表，我们会在活动前发送最终提醒</p>
+    </div>
+
+    <div class="roles-grid">
+      <div class="role-card">
+        <div class="role-icon">📸</div>
+        <h3>摄影 / 摄像</h3>
+        <p>现场拍摄照片和视频，活动后48小时内发布到所有社媒平台。</p>
+        <span class="role-required">必须</span>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">📢</div>
+        <h3>现场领队</h3>
+        <p>带领参与者喊口号，控制现场节奏，需要有感染力和大嗓门。</p>
+        <span class="role-required">必须</span>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">🎤</div>
+        <h3>发言人</h3>
+        <p>分享你的亲身经历，向媒体和路人讲述安调拖延的真实代价。至少5位。</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">📱</div>
+        <h3>社媒直播</h3>
+        <p>在小红书、Instagram、X 实时发布活动动态，扩大传播影响力。</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">📰</div>
+        <h3>媒体联络</h3>
+        <p>联系 CBC、CTV Vancouver、星岛日报等媒体，发送新闻稿争取报道。</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">🎯</div>
+        <h3>普通参与者</h3>
+        <p>带着牌子和口号出现在现场，你的存在本身就是最有力的声音。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPORT / MEDIA -->
+<section class="support" id="support">
+  <div class="container">
+    <span class="section-label">媒体目标 · Media Targets</span>
+    <h2>我们将联系<span class="en">Media We Are Reaching Out To</span></h2>
+    <div class="divider"></div>
+    <p style="color:var(--ink-mid); line-height:1.8; max-width:600px;">
+      我们将主动联系以下媒体，争取报道。如活动当日有记者到场，欢迎接受采访。
+    </p>
+    <div class="media-logos">
+      <span class="media-tag">CBC Vancouver</span>
+      <span class="media-tag">CTV Vancouver</span>
+      <span class="media-tag">Globe and Mail</span>
+      <span class="media-tag">Vancouver Sun</span>
+      <span class="media-tag">The Tyee</span>
+      <span class="media-tag">星岛日报</span>
+      <span class="media-tag">明报</span>
+    </div>
+
+    <div style="margin-top:56px;">
+      <span class="section-label">联系 IRCC / Public Safety</span>
+      <h2 style="font-size:1.6rem;">活动前后，我们还会<span class="en">Beyond the Rally</span></h2>
+      <div class="divider"></div>
+      <ul style="list-style:none; margin-top:24px; display:flex; flex-direction:column; gap:14px;">
+        <li style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="color:var(--red); font-size:1.2rem;">→</span>
+          <span style="font-size:0.9rem; line-height:1.7; color:var(--ink-mid);">提前通知 VPD 活动时间、地点和预计人数</span>
+        </li>
+        <li style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="color:var(--red); font-size:1.2rem;">→</span>
+          <span style="font-size:0.9rem; line-height:1.7; color:var(--ink-mid);">活动前后通知 IRCC / CBSA / CSIS，发送正式信件</span>
+        </li>
+        <li style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="color:var(--red); font-size:1.2rem;">→</span>
+          <span style="font-size:0.9rem; line-height:1.7; color:var(--ink-mid);">联系温哥华地区 MP 和参议员，寻求出席、公开表态或在国会提问</span>
+        </li>
+        <li style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="color:var(--red); font-size:1.2rem;">→</span>
+          <span style="font-size:0.9rem; line-height:1.7; color:var(--ink-mid);">活动后48小时内向所有媒体发布视频和新闻稿</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <span class="section-label">常见问题 · FAQ</span>
+    <h2>你可能想知道<span class="en">What You Need to Know</span></h2>
+    <div class="divider"></div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">参加游行安全吗？会影响我的移民申请吗？</div>
+        <div class="faq-a">和平抗议是加拿大宪法保护的合法权利（《权利与自由宪章》第2条）。参与合法抗议不会影响你的移民申请。如有顾虑，你可以不公开面部或姓名。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">我没有受到安调拖延，可以参加吗？</div>
+        <div class="faq-a">当然可以！任何支持移民公正的人都欢迎参加，包括 PR 已获批的朋友、公民、留学生，以及关心这个议题的所有人。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">活动当天需要准备什么？</div>
+        <div class="faq-a">带上你自己就够了！组织方会提供牌子和传单。建议穿着醒目、舒适的衣物，并根据天气备好雨具。如果你有自制的标语牌，也非常欢迎！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">活动会说中文还是英文？</div>
+        <div class="faq-a">两者都有。口号和标语以中英双语为主，发言人可自选语言。我们希望活动对所有人都友好。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">如何跟进活动相关信息？</div>
+        <div class="faq-a">请填写报名表，我们会在活动前通过微信群或邮件发送最终提醒和详细信息。也可以关注我们的小红书和 Instagram 账号获取最新动态。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo-big">温哥华 5·1 行动</div>
+  <div style="color:var(--red); font-family:'DM Serif Display', serif; font-style:italic; margin-top:4px;">Vancouver May 1 Action for PR Justice</div>
+  <div class="social-links">
+    <a href="#">小红书</a>
+    <a href="#">Instagram</a>
+    <a href="#">X (Twitter)</a>
+    <a href="#">微信群</a>
+  </div>
+  <p>
+    与全国行动联动 · In solidarity with <a href="https://chinese-pr-delay.ca/" style="color:var(--gold-light);">PR Justice Now (313 Ottawa)</a><br/>
+    本活动为和平、自发的公民行动，与任何政党无关。<br/>
+    This is a peaceful, independent civic action with no party affiliation.
+  </p>
+  <p style="margin-top:24px; font-size:0.75rem; color:#55453A;">
+    © 2026 Vancouver May 1 Action · All rights reserved
+  </p>
+</footer>
+
+</body>
+</html>
