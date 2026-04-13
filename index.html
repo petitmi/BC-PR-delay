@@ -23,9 +23,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--paper);
@@ -109,7 +107,7 @@
     .hero-date-box {
       display: inline-flex; flex-direction: column; align-items: center;
       border: 2px solid var(--red);
-      padding: 20px 40px; margin-bottom: 40px;
+      padding: 20px 40px; margin-bottom: 32px;
       animation: fadeUp 0.7s 0.3s ease both;
     }
     .hero-date-big {
@@ -121,6 +119,49 @@
       font-size: 0.85rem; color: var(--gray);
       letter-spacing: 0.08em; margin-top: 6px;
     }
+
+    /* Route summary in hero */
+    .hero-route {
+      display: flex; align-items: stretch; gap: 0;
+      margin-bottom: 40px;
+      animation: fadeUp 0.7s 0.35s ease both;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .route-stop {
+      display: flex; flex-direction: column; align-items: center;
+      background: white;
+      border: 1px solid var(--cream);
+      padding: 16px 24px;
+      min-width: 180px;
+    }
+    .route-stop-time {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem; color: var(--red); line-height: 1;
+      margin-bottom: 4px;
+    }
+    .route-stop-name {
+      font-size: 0.8rem; font-weight: 700; color: var(--ink);
+      letter-spacing: 0.04em; text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .route-stop-desc {
+      font-size: 0.72rem; color: var(--gray); line-height: 1.4;
+      text-align: center;
+    }
+    .route-stop.reg-note {
+      border-color: var(--gold);
+      background: #FFFBF0;
+    }
+    .route-arrow {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 8px;
+      font-size: 1.4rem; color: var(--red);
+      background: var(--paper-warm);
+      border-top: 1px solid var(--cream);
+      border-bottom: 1px solid var(--cream);
+      font-weight: 700;
+    }
+
     .hero-location {
       font-size: 0.95rem; color: var(--ink-mid);
       margin-bottom: 48px;
@@ -224,9 +265,58 @@
     .event h2, .event .section-label { color: white; }
     .event h2 .en { color: rgba(255,255,255,0.5); }
     .event .divider { background: var(--gold-light); }
+
+    /* Route visual in event section */
+    .route-visual {
+      margin: 40px 0;
+      display: flex; align-items: stretch;
+      gap: 0; flex-wrap: wrap;
+    }
+    .route-block {
+      flex: 1; min-width: 200px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 24px 20px;
+      position: relative;
+    }
+    .route-block.highlight {
+      background: rgba(255,255,255,0.18);
+      border-color: var(--gold-light);
+    }
+    .route-block-time {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem; color: var(--gold-light); line-height: 1;
+      margin-bottom: 6px;
+    }
+    .route-block-place {
+      font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;
+    }
+    .route-block-addr {
+      font-size: 0.78rem; color: rgba(255,255,255,0.6); line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .route-block-desc {
+      font-size: 0.85rem; color: rgba(255,255,255,0.85); line-height: 1.6;
+    }
+    .route-badge {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px; border-radius: 2px; margin-top: 10px;
+    }
+    .route-badge.open { background: rgba(255,255,255,0.2); color: white; }
+    .route-badge.reg { background: var(--gold); color: var(--ink); }
+    .route-connector {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; flex-shrink: 0;
+      background: rgba(0,0,0,0.15);
+      font-size: 1.2rem; color: var(--gold-light);
+      font-weight: 700; writing-mode: horizontal-tb;
+    }
+
     .event-grid {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 48px; margin-top: 48px;
+      gap: 48px; margin-top: 40px;
     }
     @media (max-width: 640px) { .event-grid { grid-template-columns: 1fr; } }
     .event-detail { margin-bottom: 24px; }
@@ -248,6 +338,13 @@
       font-family: 'DM Serif Display', serif;
       font-size: 1rem; color: var(--gold-light);
       width: 60px; flex-shrink: 0;
+    }
+    .schedule li.phase-marker {
+      background: rgba(255,255,255,0.08);
+      padding: 8px 10px; margin: 4px -10px;
+      border-bottom: none; border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gold-light);
     }
 
     /* ── JOIN / ROLES ── */
@@ -296,7 +393,7 @@
     .faq-q {
       font-family: 'Noto Serif SC', serif;
       font-size: 1rem; font-weight: 600;
-      margin-bottom: 10px; cursor: pointer;
+      margin-bottom: 10px;
     }
     .faq-a { font-size: 0.9rem; line-height: 1.8; color: var(--ink-mid); }
 
@@ -343,10 +440,34 @@
     @media (max-width: 680px) {
       .nav-links { display: none; }
       nav { padding: 12px 20px; }
+      .route-visual { flex-direction: column; }
+      .route-connector { width: 100%; height: 32px; writing-mode: horizontal-tb; }
+      .route-connector::after { content: '↓'; }
+      .route-connector { font-size: 1rem; }
     }
     @media (max-width: 480px) {
       .demand-num { display: none; }
       .demand-item { gap: 0; }
+      .hero-route { flex-direction: column; align-items: stretch; }
+      .route-arrow { height: 32px; writing-mode: horizontal-tb; }
+    }
+
+    /* ── REGISTRATION NOTE BOX ── */
+    .reg-info-box {
+      background: rgba(212,160,23,0.12);
+      border: 1px solid var(--gold);
+      border-left: 4px solid var(--gold);
+      padding: 16px 20px;
+      margin-top: 16px;
+      border-radius: 0 2px 2px 0;
+    }
+    .reg-info-box-title {
+      font-weight: 700; font-size: 0.85rem;
+      color: var(--ink); margin-bottom: 6px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .reg-info-box p {
+      font-size: 0.83rem; color: var(--ink-mid); line-height: 1.7;
     }
   </style>
 </head>
@@ -364,7 +485,7 @@
   </ul>
 </nav>
 
-<!-- 313 BANNER -->
+<!-- ANNOUNCEMENT BANNER -->
 <div style="background: var(--ink-mid); color: white; text-align: center; padding: 10px 24px; font-size: 0.82rem; letter-spacing: 0.03em; margin-top: 57px;">
   📢 现在签署国会请愿 e-7341 ·
   <a href="https://www.ourcommons.ca/petitions/en/Petition/Details?Petition=e-7341" target="_blank" rel="noopener"
@@ -380,28 +501,50 @@
 
 <!-- HERO -->
 <section class="hero" style="padding-top: 80px;">
-  <span class="hero-badge">VAN501 · 温哥华 IRCC 办公室前 · 和平抗议</span>
+  <span class="hero-badge">VAN501 · 温哥华 · 和平游行抗议</span>
   <h1 class="hero-cn">VAN501·终结安调拖延</h1>
   <p class="hero-en">VAN501 — End the Endless Wait</p>
- 
+
   <div class="hero-date-box">
     <div class="hero-date-big">2026 · 五月一日</div>
     <div class="hero-date-sub">Friday, May 1, 2026 &nbsp;·&nbsp; 9:00 AM – 12:00 PM</div>
   </div>
- 
-  <p class="hero-location">
-    <strong>1148 Hornby St, Vancouver, BC</strong><br/>
-    IRCC 温哥华办公楼前 &nbsp;·&nbsp; Vancouver IRCC Office
-  </p>
- 
+
+  <!-- Tentative notice -->
+  <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(212,160,23,0.15); border:1px solid var(--gold); padding:8px 18px; border-radius:2px; margin-bottom:16px; animation: fadeUp 0.7s 0.28s ease both;">
+    <span style="font-size:0.9rem;">📌</span>
+    <span style="font-size:0.78rem; font-weight:700; color:var(--ink-mid); letter-spacing:0.03em;">
+      以下流程与地点<strong style="color:var(--red);">暂定</strong>，将根据最终报名人数调整 &nbsp;·&nbsp; <em style="font-weight:400;">Schedule &amp; locations tentative, subject to change based on attendance</em>
+    </span>
+  </div>
+
+  <!-- Route summary -->
+  <div class="hero-route">
+    <div class="route-stop">
+      <div class="route-stop-time">9:00</div>
+      <div class="route-stop-name">Vancouver Art Gallery</div>
+      <div class="route-stop-desc">750 Hornby St<br/>集合 · 演讲<br/>Gather &amp; Speeches<br/><em style="color:var(--red); font-size:0.68rem;">无需注册 · No registration required</em></div>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-stop">
+      <div class="route-stop-time">11:00</div>
+      <div class="route-stop-name">游行出发</div>
+      <div class="route-stop-desc">March Begins<br/>步行前往 IRCC</div>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-stop reg-note">
+      <div class="route-stop-time">11:10</div>
+      <div class="route-stop-name">IRCC 温哥华办公室</div>
+      <div class="route-stop-desc">1148 Hornby St<br/>喊口号<br/><em style="color:var(--gold); font-size:0.68rem; font-weight:700;">⚠️ 注册制 · Registration required</em></div>
+    </div>
+  </div>
+
   <div class="hero-cta">
     <a class="btn-primary" href="https://www.ourcommons.ca/petitions/en/Petition/Details?Petition=e-7341" target="_blank" rel="noopener">✍️ 签署请愿 e-7341 / Sign Petition</a>
     <a class="btn-primary" href="#join" style="background:var(--ink);">📣 加入游行 / Join Rally</a>
     <a class="btn-outline" href="#event">活动详情 / Event Details</a>
   </div>
- 
 
- 
   <!-- Social & Contact Bar -->
   <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:32px; padding-top:28px; border-top:1px solid var(--cream);">
     <a href="https://www.instagram.com/bc.pr.delay/" target="_blank" rel="noopener"
@@ -410,6 +553,7 @@
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
       </svg>
+      @bc.pr.delay
     </a>
     <a href="mailto:bc.pr.delay@gmail.com"
        style="display:flex; align-items:center; gap:8px; color:var(--ink-mid); text-decoration:none; font-size:0.88rem; font-weight:600; transition:color 0.2s;"
@@ -417,6 +561,7 @@
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/>
       </svg>
+      bc.pr.delay@gmail.com
     </a>
   </div>
 </section>
@@ -437,7 +582,7 @@
   </div>
   <div class="counter-item">
     <div class="counter-num">55%</div>
-    <div class="counter-label">PR 申请超期积压率<br/>PR Applications in Backlog</div>
+    <div class="counter-label">PR 申请超期积压率<br/>Applications Over Standard</div>
   </div>
 </div>
 
@@ -454,7 +599,6 @@
       On March 13, 2026, we marched on Parliament Hill. That action won e-petition e-7259 and put this crisis on the national stage. The same movement now comes to Vancouver — and we are not stopping until IRCC, CSIS, and CBSA act.
     </p>
 
-    <!-- 313 Link Card -->
     <a href="https://chinese-pr-delay.ca/" target="_blank" rel="noopener"
        style="display:flex; align-items:center; gap:20px; background:rgba(255,255,255,0.06); border:1px solid rgba(212,160,23,0.4); padding:20px 24px; margin: 40px 0 0; text-decoration:none; transition: background 0.2s;"
        onmouseover="this.style.background='rgba(255,255,255,0.1)'"
@@ -510,21 +654,21 @@
       <div class="demand-item">
         <div class="demand-num">01</div>
         <div class="demand-body">
-          <h3>🕐 加快安调速度 — 设定明确时限</h3>
+          <h3>加快安调速度 — 设定明确时限</h3>
           <p>要求 IRCC、CSIS、CBSA 在合理时间内完成安全背景调查，并向申请人公开处理阶段与预计完成时间。已完成 CSIS 审查的申请人，CBSA 应在30天内完成最终处理。</p>
         </div>
       </div>
       <div class="demand-item">
         <div class="demand-num">02</div>
         <div class="demand-body">
-          <h3>🔍 提高透明度 — 主动告知进展</h3>
+          <h3>提高透明度 — 主动告知进展</h3>
           <p>要求每90天主动更新案件状态，包括当前由哪一机构处理、处于何阶段、预计何时完成。申请人有权利了解自己案件的进展。</p>
         </div>
       </div>
       <div class="demand-item">
         <div class="demand-num">03</div>
         <div class="demand-body">
-          <h3>⚖️ 建立问责机制 — 设立独立监督</h3>
+          <h3>建立问责机制 — 设立独立监督</h3>
           <p>设立独立移民监察专员，有权调查 IRCC 处理拖延、强制回应申请人投诉；建立 CBSA 移民安全审查独立监督机构，确保问责有依据、有后果。</p>
         </div>
       </div>
@@ -543,7 +687,6 @@
       我们正在推动国会公共安全与国家安全常设委员会对移民安全审查延误展开正式研究。这是改变系统性问题的关键一步。加拿大公民和居民均可签署。
     </p>
 
-    <!-- Big CTA -->
     <div style="text-align:center; margin-bottom:56px;">
       <a href="https://www.ourcommons.ca/petitions/en/Petition/Details?Petition=e-7341"
          target="_blank" rel="noopener"
@@ -555,7 +698,6 @@
       <p style="margin-top:12px; font-size:0.82rem; color:var(--gray);">需为加拿大公民或居民（含工签、学签持有者）并通过邮件确认 · Canadian citizen or resident, email confirmation required</p>
     </div>
 
-    <!-- What the petition calls for -->
     <div style="border-left: 3px solid var(--gold); padding-left: 24px; margin-bottom: 40px;">
       <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:16px;">请愿要求国会 · The Petition Calls On Parliament To</div>
       <p style="color:#C4B9AD; line-height:1.8; font-size:0.9rem; margin-bottom:16px;">要求国会公共安全与国家安全常设委员会就移民安全审查延误展开专项研究，具体包括：</p>
@@ -591,13 +733,12 @@
       </div>
     </div>
 
-    <!-- e-7259 as achievement -->
     <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); padding:20px 24px; display:flex; gap:20px; align-items:flex-start;">
       <span style="font-size:1.8rem; flex-shrink:0;">✅</span>
       <div>
         <div style="color:var(--paper); font-weight:700; font-size:0.9rem; margin-bottom:6px;">已有成果：e-7259 请愿（3·13 渥太华行动推动）</div>
         <div style="color:#C4B9AD; font-size:0.83rem; line-height:1.7;">
-          由 MP Jenny Kwan 赞助，3·13 渥太华游行推动发起，呼吁国会为 PR 安全审查设定明确时限、提高透明度与问责。已征集大量签名，目标 10,000+。
+          由 MP Jenny Kwan 赞助，3·13 渥太华游行推动发起，呼吁国会为 PR 安全审查设定明确时限、提高透明度与问责。已征集10,000+签名。
           <a href="https://www.ourcommons.ca/petitions/en/Petition/Details?Petition=e-7259" target="_blank" rel="noopener"
              style="color:var(--gold-light); margin-left:6px;">查看 e-7259 →</a>
         </div>
@@ -613,6 +754,52 @@
     <h2>VAN501 · 5·1 温哥华行动<span class="en">VAN501 — May 1 Vancouver Action</span></h2>
     <div class="divider"></div>
 
+    <!-- Tentative notice -->
+    <div style="display:flex; align-items:center; gap:10px; background:rgba(212,160,23,0.15); border:1px solid var(--gold-light); border-left:4px solid var(--gold-light); padding:12px 18px; margin-bottom:24px;">
+      <span style="font-size:1.1rem; flex-shrink:0;">📌</span>
+      <span style="font-size:0.85rem; line-height:1.6; color:white;">
+        <strong style="color:var(--gold-light);">暂定方案</strong> — 以下流程与地点将根据最终报名人数进行调整，请持续关注我们的社媒和邮件通知。<br/>
+        <em style="color:rgba(255,255,255,0.65); font-size:0.8rem;">Schedule &amp; locations are tentative and subject to change depending on final attendance numbers.</em>
+      </span>
+    </div>
+
+    <!-- Route Visual -->
+    <div class="route-visual">
+      <div class="route-block">
+        <div class="route-block-time">9:00 — 11:00</div>
+        <div class="route-block-place">Vancouver Art Gallery</div>
+        <div class="route-block-addr">750 Hornby St, Vancouver, BC</div>
+        <div class="route-block-desc">集合、演讲、发放物资<br/>Rally, speeches &amp; sign distribution</div>
+        <span class="route-badge open">无需注册 · Open to All</span>
+      </div>
+      <div class="route-connector">→</div>
+      <div class="route-block" style="background:rgba(255,255,255,0.08);">
+        <div class="route-block-time">11:00</div>
+        <div class="route-block-place">游行出发 · March Begins</div>
+        <div class="route-block-addr">步行约10分钟 · ~10 min walk</div>
+        <div class="route-block-desc">一同前往 IRCC 温哥华办公楼<br/>March together to IRCC office</div>
+        <!-- <span class="route-badge reg">⚠️ 注册制 · Registration Required</span> -->
+      </div>
+      <div class="route-connector">→</div>
+      <div class="route-block highlight">
+        <div class="route-block-time">11:10 — 12:00</div>
+        <div class="route-block-place">IRCC 温哥华办公室</div>
+        <div class="route-block-addr">1148 Hornby St, Vancouver, BC</div>
+        <div class="route-block-desc">喊口号、集体发声<br/>Chants &amp; collective action</div>
+        <span class="route-badge reg">⚠️ 注册制 · Registration Required</span>
+      </div>
+    </div>
+
+    <!-- Registration note -->
+    <div class="reg-info-box" style="background:rgba(212,160,23,0.15); border-color:var(--gold-light); margin-bottom:40px;">
+      <div class="reg-info-box-title" style="color:var(--gold-light);">
+        <span>⚠️</span> 关于 IRCC 楼前的注册制说明
+      </div>
+      <p style="color:rgba(255,255,255,0.8);">
+        因控制人数需要，在 IRCC 温哥华办公楼（1148 Hornby St）前进行的部分活动需要事先注册登记。Vancouver Art Gallery 阶段（9:00–11:00）对所有人开放，无需注册，欢迎直接到场。请通过报名表或邮件联系我们以确认 IRCC 楼前的参与名额。
+      </p>
+    </div>
+
     <div class="event-grid">
       <div>
         <div class="event-detail">
@@ -620,31 +807,33 @@
           <div class="event-detail-val">2026年5月1日（周五）<br/>Friday, May 1, 2026</div>
         </div>
         <div class="event-detail">
-          <div class="event-detail-label">时间 Time</div>
-          <div class="event-detail-val">上午 9:00 — 中午 12:00</div>
+          <div class="event-detail-label">第一阶段 Phase 1</div>
+          <div class="event-detail-val">9:00 AM — 11:00 AM<br/>Vancouver Art Gallery<br/><small style="opacity:0.7;">750 Hornby St · 无需注册 Open to all</small></div>
         </div>
         <div class="event-detail">
-          <div class="event-detail-label">地点 Location</div>
-          <div class="event-detail-val">IRCC 温哥华办公楼<br/>1148 Hornby St, Vancouver, BC</div>
+          <div class="event-detail-label">第二阶段 Phase 2</div>
+          <div class="event-detail-val">11:00 AM — 12:00 PM<br/>IRCC 温哥华办公室<br/><small style="color:var(--gold-light);">1148 Hornby St · ⚠️ 注册制 Registration req.</small></div>
         </div>
         <div class="event-detail">
           <div class="event-detail-label">形式 Format</div>
-          <div class="event-detail-val">和平举牌 + 喊口号 + 演讲（如有）<br/>Peaceful rally, signs, chants, speakers</div>
-        </div>
-        <div class="event-detail">
-          <div class="event-detail-label">预计人数</div>
-          <div class="event-detail-val">30–50人，越多越好</div>
+          <div class="event-detail-val">演讲 + 游行 + 喊口号<br/>Speeches, march &amp; chants</div>
         </div>
       </div>
 
       <div>
         <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:16px;">当日流程 Schedule</div>
         <ul class="schedule">
-          <li><span class="time">8:45</span><span>各岗位人员提前到场布置</span></li>
+          <li class="phase-marker"><span style="width:60px; display:inline-block;">第一阶段</span> Vancouver Art Gallery · 无需注册</li>
+          <li><span class="time">8:45</span><span>核心岗位人员提前到场布置</span></li>
           <li><span class="time">9:00</span><span>集合，发放物资与须知卡片</span></li>
-          <li><span class="time">9:15</span><span>开场，现场领队带领喊口号</span></li>
-          <li><span class="time">9:15–11:30</span><span>举牌 + 口号，穿插发言人演讲<br/><small style="opacity:0.6">社媒实时发布</small></span></li>
-          <li><span class="time">11:30</span><span>结束发言，告知下一步行动</span></li>
+          <li><span class="time">9:15</span><span>开场发言，现场领队带领口号</span></li>
+          <li><span class="time">9:15–10:45</span><span>发言人演讲 + 喊口号<br/><small style="opacity:0.6;">社媒实时发布</small></span></li>
+          <li><span class="time">10:50</span><span>集合准备游行出发</span></li>
+          <li class="phase-marker"><span style="width:60px; display:inline-block;">游行</span> March to IRCC · ~15 min walk</li>
+          <li><span class="time">11:00</span><span>🚶 从 Art Gallery 出发步行</span></li>
+          <li class="phase-marker"><span style="width:60px; display:inline-block;">第二阶段</span> IRCC 大楼前 · 注册制 ⚠️</li>
+          <li><span class="time">11:10</span><span>抵达 1148 Hornby，喊口号</span></li>
+          <li><span class="time">11:45</span><span>结束发言，告知下一步行动</span></li>
           <li><span class="time">12:00</span><span>有序散场</span></li>
         </ul>
       </div>
@@ -658,15 +847,24 @@
     <span class="section-label">加入我们 · Join Us</span>
     <h2>我们需要你<span class="en">Every Voice Counts</span></h2>
     <div class="divider"></div>
-    <p style="color:var(--ink-mid); line-height:1.8; max-width:600px; margin-bottom:40px;">
+    <p style="color:var(--ink-mid); line-height:1.8; max-width:600px; margin-bottom:24px;">
       无论你是受影响的申请人、支持者、还是关心移民公正的每一个人，我们都欢迎你。带上你的故事，和我们一起站出来。
     </p>
 
+    <!-- Registration clarification -->
+    <div class="reg-info-box" style="margin-bottom:40px;">
+      <div class="reg-info-box-title">参与方式说明</div>
+      <p>
+        <strong>Vancouver Art Gallery（9:00–11:00）：</strong>无需注册，直接到场即可。<br/>
+        <strong>IRCC 大楼前（11:10–12:00）：</strong>需要提前注册登记，请填写下方报名表或发送邮件确认。
+      </p>
+    </div>
+
     <div style="text-align:center; margin-bottom:56px;">
-      <a class="btn-primary" href="https://forms.gle" style="font-size:1rem; padding:16px 40px;">
-        📋 报名参与 / Register to Join
+      <a class="btn-primary" href="https://forms.gle/S4HNSefmseQtQeoo6" style="font-size:1rem; padding:16px 40px;">
+        报名参与 / Register to Join
       </a>
-      <p style="margin-top:12px; font-size:0.82rem; color:var(--gray);">点击填写报名表，我们会在活动前发送最终提醒</p>
+      <p style="margin-top:12px; font-size:0.82rem; color:var(--gray);">点击填写报名表，我们会在活动前发送最终提醒与 IRCC 楼前参与信息</p>
       <p style="margin-top:8px; font-size:0.82rem; color:var(--gray);">
         或发送邮件联系我们 · Email us：
         <a href="mailto:bc.pr.delay@gmail.com" style="color:var(--red); font-weight:600;">bc.pr.delay@gmail.com</a>
@@ -674,33 +872,33 @@
     </div>
 
     <div class="roles-grid">
-      <div class="role-card">
+      <!-- <div class="role-card">
         <div class="role-icon">📸</div>
         <h3>摄影 / 摄像</h3>
         <p>现场拍摄照片和视频，活动后48小时内发布到所有社媒平台。</p>
         <span class="role-required">必须</span>
-      </div>
-      <div class="role-card">
+      </div> -->
+      <!-- <div class="role-card">
         <div class="role-icon">📢</div>
         <h3>现场领队</h3>
         <p>带领参与者喊口号，控制现场节奏，需要有感染力和大嗓门。</p>
         <span class="role-required">必须</span>
-      </div>
+      </div> -->
       <div class="role-card">
         <div class="role-icon">🎤</div>
         <h3>发言人</h3>
         <p>分享你的亲身经历，向媒体和路人讲述安调拖延的真实代价。至少5位。</p>
       </div>
-      <div class="role-card">
+      <!-- <div class="role-card">
         <div class="role-icon">📱</div>
         <h3>社媒直播</h3>
         <p>在小红书、Instagram、X 实时发布活动动态，扩大传播影响力。</p>
-      </div>
-      <div class="role-card">
+      </div> -->
+      <!-- <div class="role-card">
         <div class="role-icon">📰</div>
         <h3>媒体联络</h3>
         <p>联系 CBC、CTV Vancouver、星岛日报等媒体，发送新闻稿争取报道。</p>
-      </div>
+      </div> -->
       <div class="role-card">
         <div class="role-icon">🎯</div>
         <h3>普通参与者</h3>
@@ -724,9 +922,9 @@
       <span class="media-tag">CTV Vancouver</span>
       <span class="media-tag">Globe and Mail</span>
       <span class="media-tag">Vancouver Sun</span>
-      <span class="media-tag">The Tyee</span>
-      <span class="media-tag">星岛日报</span>
-      <span class="media-tag">明报</span>
+      <span class="media-tag">TBD</span>
+      <!-- <span class="media-tag">星岛日报</span> -->
+      <!-- <span class="media-tag">明报</span> -->
     </div>
 
     <div style="margin-top:56px;">
@@ -764,6 +962,10 @@
 
     <div class="faq-list">
       <div class="faq-item">
+        <div class="faq-q">活动分为哪两个阶段？有什么区别？</div>
+        <div class="faq-a">第一阶段（9:00–11:00）在 Vancouver Art Gallery 举行，无需注册，所有人直接到场即可参与集合和演讲。11:00 从 Art Gallery 出发步行游行至 IRCC 温哥华办公室（1148 Hornby St），IRCC 楼前阶段需要提前注册登记，请通过报名表或邮件联系我们确认。</div>
+      </div>
+      <div class="faq-item">
         <div class="faq-q">参加游行安全吗？会影响我的移民申请吗？</div>
         <div class="faq-a">和平抗议是加拿大宪法保护的合法权利（《权利与自由宪章》第2条）。参与合法抗议不会影响你的移民申请。如有顾虑，你可以不公开面部或姓名。</div>
       </div>
@@ -794,7 +996,7 @@
   <div class="social-links">
     <a href="mailto:bc.pr.delay@gmail.com">📧 bc.pr.delay@gmail.com</a>
     <a href="#">小红书</a>
-    <a href="#">Instagram</a>
+    <a href="https://www.instagram.com/bc.pr.delay/" target="_blank" rel="noopener">Instagram</a>
     <a href="#">X (Twitter)</a>
     <a href="#">微信群</a>
   </div>
