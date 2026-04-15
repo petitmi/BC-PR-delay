@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5871ZMC4MP"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -28,6 +27,7 @@
       --cream: #EDE3D4;
       --gray: #8B7B6E;
       --white: #FFFFFF;
+      --wechat: #07C160;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -38,6 +38,56 @@
       color: var(--ink);
       overflow-x: hidden;
     }
+
+    /* ── LANG TOGGLE ── */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 3px;
+    }
+    .lang-switcher button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 5px 12px;
+      border-radius: 16px;
+      color: var(--gray);
+      transition: all 0.2s;
+    }
+    .lang-switcher button.active {
+      background: var(--red);
+      color: white;
+    }
+
+    /* hide/show by language */
+    [data-lang="zh"] { display: none; }
+    [data-lang="en"] { display: none; }
+    body.lang-zh [data-lang="zh"] { display: revert; }
+    body.lang-en [data-lang="en"] { display: revert; }
+    /* for inline spans */
+    span[data-lang], a[data-lang], strong[data-lang], em[data-lang] {
+      display: none;
+    }
+    body.lang-zh span[data-lang="zh"],
+    body.lang-zh a[data-lang="zh"],
+    body.lang-zh strong[data-lang="zh"],
+    body.lang-zh em[data-lang="zh"] { display: inline; }
+    body.lang-en span[data-lang="en"],
+    body.lang-en a[data-lang="en"],
+    body.lang-en strong[data-lang="en"],
+    body.lang-en em[data-lang="en"] { display: inline; }
+    /* for flex items */
+    .flex-lang[data-lang="zh"],
+    .flex-lang[data-lang="en"] { display: none; }
+    body.lang-zh .flex-lang[data-lang="zh"] { display: flex; }
+    body.lang-en .flex-lang[data-lang="en"] { display: flex; }
 
     /* ── NAV ── */
     nav {
@@ -62,6 +112,7 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--red); }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
 
     /* ── HERO ── */
     .hero {
@@ -321,13 +372,6 @@
     .role-icon { font-size: 1.6rem; margin-bottom: 8px; }
     .role-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
     .role-card p { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
-    .role-required {
-      display: inline-block;
-      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase;
-      background: var(--red); color: white;
-      padding: 2px 6px; border-radius: 2px; margin-top: 8px;
-    }
 
     /* ── FAQ ── */
     .faq { background: var(--paper-warm); }
@@ -355,13 +399,6 @@
       color: var(--red); margin-bottom: 8px;
     }
     footer p { font-size: 0.82rem; color: var(--gray); line-height: 1.8; margin-top: 16px; }
-    .social-links { display: flex; gap: 16px; justify-content: center; margin-top: 20px; }
-    .social-links a {
-      color: var(--gray); text-decoration: none;
-      font-size: 0.82rem; letter-spacing: 0.05em;
-      transition: color 0.2s;
-    }
-    .social-links a:hover { color: var(--gold-light); }
 
     /* ── ANIMATION ── */
     @keyframes fadeUp {
@@ -413,275 +450,117 @@
     }
 
     /* ── MP WRITE WIDGET ── */
-    .mp-steps {
-      display: flex; flex-direction: column; gap: 0;
-      margin-bottom: 20px;
-    }
-    .mp-step {
-      display: flex; gap: 16px; align-items: flex-start;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
+    .mp-steps { display: flex; flex-direction: column; gap: 0; margin-bottom: 20px; }
+    .mp-step { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .mp-step:last-child { border-bottom: none; }
-    .mp-step-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.6rem; color: var(--gold); opacity: 0.7;
-      line-height: 1; flex-shrink: 0; width: 28px; padding-top: 2px;
-    }
+    .mp-step-num { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--gold); opacity: 0.7; line-height: 1; flex-shrink: 0; width: 28px; padding-top: 2px; }
     .mp-step-body { flex: 1; }
-    .mp-step-label {
-      font-weight: 700; font-size: 0.88rem;
-      color: var(--gold-light); margin-bottom: 4px;
-    }
-    .mp-step-desc {
-      font-size: 0.82rem; color: rgba(255,255,255,0.6);
-      line-height: 1.6; margin-bottom: 10px;
-    }
-
-    .mp-find-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--gold); color: var(--ink);
-      border: none; cursor: pointer;
-      padding: 11px 22px; border-radius: 2px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem; font-weight: 700;
-      letter-spacing: 0.04em; text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
+    .mp-step-label { font-weight: 700; font-size: 0.88rem; color: var(--gold-light); margin-bottom: 4px; }
+    .mp-step-desc { font-size: 0.82rem; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 10px; }
+    .mp-find-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--ink); border: none; cursor: pointer; padding: 11px 22px; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em; text-decoration: none; transition: background 0.2s, transform 0.15s; }
     .mp-find-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-    /* MP manual entry form */
-    .mp-entry-form {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 2px;
-      padding: 20px;
-      margin-top: 4px;
-    }
-    .mp-entry-row {
-      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px;
-    }
-    .mp-entry-field {
-      flex: 1; min-width: 180px;
-    }
-    .mp-entry-field label {
-      display: block;
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: rgba(255,255,255,0.5);
-      margin-bottom: 5px;
-    }
-    .mp-entry-field input {
-      width: 100%;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: white; padding: 10px 14px;
-      font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
-      border-radius: 2px; outline: none;
-      transition: border-color 0.2s;
-    }
+    .mp-entry-form { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 20px; margin-top: 4px; }
+    .mp-entry-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .mp-entry-field { flex: 1; min-width: 180px; }
+    .mp-entry-field label { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 5px; }
+    .mp-entry-field input { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; border-radius: 2px; outline: none; transition: border-color 0.2s; }
     .mp-entry-field input::placeholder { color: rgba(255,255,255,0.3); }
     .mp-entry-field input:focus { border-color: var(--gold-light); }
-
-    .mp-generate-btn {
-      background: var(--gold); color: var(--ink);
-      border: none; cursor: pointer;
-      padding: 11px 24px; border-radius: 2px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.88rem; font-weight: 700; letter-spacing: 0.05em;
-      transition: background 0.2s, transform 0.15s;
-      display: inline-flex; align-items: center; gap: 8px;
-    }
+    .mp-generate-btn { background: var(--gold); color: var(--ink); border: none; cursor: pointer; padding: 11px 24px; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.05em; transition: background 0.2s, transform 0.15s; display: inline-flex; align-items: center; gap: 8px; }
     .mp-generate-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
-    .mp-generate-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-    .mp-entry-note {
-      font-size: 0.75rem; color: rgba(255,255,255,0.4);
-      margin-top: 8px; line-height: 1.6;
-    }
 
     /* Letter Modal */
-    .letter-overlay {
-      display: none;
-      position: fixed; inset: 0; z-index: 200;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(4px);
-      align-items: center; justify-content: center;
-      padding: 24px;
-    }
+    .letter-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 24px; }
     .letter-overlay.open { display: flex; }
-    .letter-modal {
-      background: var(--paper);
-      color: var(--ink);
-      width: 100%; max-width: 680px;
-      max-height: 90vh;
-      overflow-y: auto;
-      border-radius: 2px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-      animation: fadeUp 0.3s ease both;
-    }
-    .letter-modal-header {
-      background: var(--ink);
-      color: var(--paper);
-      padding: 20px 24px;
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 10;
-    }
-    .letter-modal-title {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 1rem; font-weight: 700; color: var(--gold-light);
-    }
+    .letter-modal { background: var(--paper); color: var(--ink); width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; border-radius: 2px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); animation: fadeUp 0.3s ease both; }
+    .letter-modal-header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+    .letter-modal-title { font-family: 'Noto Serif SC', serif; font-size: 1rem; font-weight: 700; color: var(--gold-light); }
     .letter-modal-subtitle { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
-    .letter-close-btn {
-      background: none; border: none; cursor: pointer;
-      color: rgba(255,255,255,0.5); font-size: 1.4rem; line-height: 1;
-      transition: color 0.2s; padding: 4px 8px;
-    }
+    .letter-close-btn { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.5); font-size: 1.4rem; line-height: 1; transition: color 0.2s; padding: 4px 8px; }
     .letter-close-btn:hover { color: white; }
     .letter-modal-body { padding: 28px 28px; }
-
-    .letter-lang-toggle {
-      display: flex; gap: 8px; margin-bottom: 20px;
-    }
-    .lang-btn {
-      padding: 6px 16px; border-radius: 2px;
-      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
-      border: 1px solid var(--cream); background: var(--paper-warm);
-      cursor: pointer; transition: all 0.2s; color: var(--ink-mid);
-    }
-    .lang-btn.active {
-      background: var(--red); color: white; border-color: var(--red);
-    }
-
-    .letter-meta {
-      margin-bottom: 16px;
-    }
-    .letter-meta label {
-      display: block; font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--gray); margin-bottom: 5px;
-    }
-    .letter-meta input {
-      width: 100%; padding: 10px 14px;
-      border: 1px solid var(--cream); border-radius: 2px;
-      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
-      background: white; color: var(--ink);
-      outline: none; transition: border-color 0.2s;
-    }
+    .letter-meta { margin-bottom: 16px; }
+    .letter-meta label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 5px; }
+    .letter-meta input { width: 100%; padding: 10px 14px; border: 1px solid var(--cream); border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; background: white; color: var(--ink); outline: none; transition: border-color 0.2s; }
     .letter-meta input:focus { border-color: var(--red); }
-
-    .letter-to-block {
-      font-size: 0.83rem; color: var(--ink-mid);
-      background: var(--paper-warm);
-      border: 1px solid var(--cream); border-left: 3px solid var(--gold);
-      padding: 12px 16px; margin-bottom: 16px;
-      line-height: 1.7;
-    }
-    .letter-to-block strong { color: var(--ink); }
-
-    .letter-subject-row {
-      margin-bottom: 16px;
-    }
-    .letter-subject-label {
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--gray); margin-bottom: 5px;
-    }
-    .letter-subject-val {
-      font-size: 0.88rem; font-weight: 600; color: var(--ink);
-      background: var(--paper-warm); border: 1px solid var(--cream);
-      padding: 8px 12px;
-    }
-
-    .letter-body-area {
-      width: 100%; min-height: 380px;
-      padding: 16px;
-      border: 1px solid var(--cream); border-radius: 2px;
-      font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
-      line-height: 1.85; color: var(--ink);
-      background: white; resize: vertical;
-      outline: none; transition: border-color 0.2s;
-    }
+    .letter-to-block { font-size: 0.83rem; color: var(--ink-mid); background: var(--paper-warm); border: 1px solid var(--cream); border-left: 3px solid var(--gold); padding: 12px 16px; margin-bottom: 16px; line-height: 1.7; }
+    .letter-subject-row { margin-bottom: 16px; }
+    .letter-subject-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 5px; }
+    .letter-subject-val { font-size: 0.88rem; font-weight: 600; color: var(--ink); background: var(--paper-warm); border: 1px solid var(--cream); padding: 8px 12px; }
+    .letter-body-area { width: 100%; min-height: 380px; padding: 16px; border: 1px solid var(--cream); border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; line-height: 1.85; color: var(--ink); background: white; resize: vertical; outline: none; transition: border-color 0.2s; }
     .letter-body-area:focus { border-color: var(--red); }
-
-    .letter-note {
-      font-size: 0.75rem; color: var(--gray);
-      margin-top: 8px; line-height: 1.6;
-    }
-    .letter-modal-footer {
-      padding: 16px 28px 28px;
-      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
-      border-top: 1px solid var(--cream);
-    }
-    .letter-copy-btn {
-      background: var(--red); color: white;
-      border: none; cursor: pointer;
-      padding: 12px 24px; border-radius: 2px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.88rem; font-weight: 700;
-      letter-spacing: 0.05em; transition: all 0.2s;
-      display: flex; align-items: center; gap: 8px;
-    }
+    .letter-note { font-size: 0.75rem; color: var(--gray); margin-top: 8px; line-height: 1.6; }
+    .letter-modal-footer { padding: 16px 28px 28px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; border-top: 1px solid var(--cream); }
+    .letter-copy-btn { background: var(--red); color: white; border: none; cursor: pointer; padding: 12px 24px; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.05em; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
     .letter-copy-btn:hover { background: var(--red-dark); }
     .letter-copy-btn.copied { background: #2D7D46; }
-    .letter-email-btn {
-      background: var(--ink); color: white;
-      border: none; cursor: pointer;
-      padding: 12px 24px; border-radius: 2px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.88rem; font-weight: 700;
-      letter-spacing: 0.05em; transition: all 0.2s;
-      text-decoration: none;
-      display: flex; align-items: center; gap: 8px;
-    }
+    .letter-email-btn { background: var(--ink); color: white; border: none; cursor: pointer; padding: 12px 24px; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.05em; transition: all 0.2s; text-decoration: none; display: flex; align-items: center; gap: 8px; }
     .letter-email-btn:hover { background: var(--ink-mid); }
-    .letter-footer-note {
-      font-size: 0.75rem; color: var(--gray);
-      margin-left: auto; text-align: right;
-    }
+    .letter-footer-note { font-size: 0.75rem; color: var(--gray); margin-left: auto; text-align: right; }
+
+    /* ── WECHAT QR POPUP ── */
+    .wechat-trigger { position: relative; display: flex; align-items: center; cursor: pointer; color: var(--ink-mid); text-decoration: none; font-size: 0.88rem; font-weight: 600; transition: color 0.2s; background: none; border: none; padding: 0; font-family: inherit; }
+    .wechat-trigger:hover { color: var(--wechat); }
+    .wechat-popup { display: none; position: absolute; bottom: calc(100% + 14px); left: 50%; transform: translateX(-50%); z-index: 300; background: white; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10); padding: 16px; width: 188px; text-align: center; animation: fadeUp 0.2s ease both; }
+    .wechat-popup::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 8px solid transparent; border-top-color: white; }
+    .wechat-popup.open { display: block; }
+    .wechat-popup img { width: 156px; height: 156px; object-fit: cover; display: block; margin: 0 auto 10px; border-radius: 4px; }
+    .wechat-popup-label { font-size: 0.75rem; font-weight: 700; color: var(--wechat); letter-spacing: 0.04em; margin-bottom: 2px; }
+    .wechat-popup-sub { font-size: 0.68rem; color: var(--gray); line-height: 1.5; }
   </style>
 </head>
-<body>
+<body class="lang-en">
 
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">VAN501 · 温哥华 5·1 行动</a>
   <ul class="nav-links">
-    <li><a href="#why">关于我们</a></li>
-    <li><a href="#demands">诉求</a></li>
-    <li><a href="#petition">立即行动</a></li>
-    <li><a href="#event">活动详情</a></li>
-    <li><a href="#join">加入我们</a></li>
+    <li><a href="#why"><span data-lang="zh">关于我们</span><span data-lang="en">About</span></a></li>
+    <li><a href="#demands"><span data-lang="zh">诉求</span><span data-lang="en">Demands</span></a></li>
+    <li><a href="#petition"><span data-lang="zh">立即行动</span><span data-lang="en">Take Action</span></a></li>
+    <li><a href="#event"><span data-lang="zh">活动详情</span><span data-lang="en">Event</span></a></li>
+    <li><a href="#join"><span data-lang="zh">加入我们</span><span data-lang="en">Join Us</span></a></li>
   </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+<button id="btnZh" onclick="setLang('zh')">中文</button>
+<button id="btnEn" class="active" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
 </nav>
 
 <!-- ANNOUNCEMENT BANNER -->
 <div style="background: var(--ink-mid); color: white; text-align: center; padding: 10px 24px; font-size: 0.82rem; letter-spacing: 0.03em; margin-top: 57px;">
-  现在签署国会请愿 e-7341 ·
+  <span data-lang="zh">现在签署国会请愿 e-7341 ·</span>
+  <span data-lang="en">Sign e-petition e-7341 now ·</span>
   <a href="https://www.ourcommons.ca/petitions/en/Petition/Details?Petition=e-7341" target="_blank" rel="noopener"
      style="color: var(--gold-light); font-weight: 700; text-decoration: underline; margin: 0 4px;">
-    点击这里立即签名 →
+    <span data-lang="zh">点击这里立即签名 →</span>
+    <span data-lang="en">Click to sign now →</span>
   </a>
-  · 我们是同一场运动：
+  · <span data-lang="zh">我们是同一场运动：</span><span data-lang="en">Same movement:</span>
   <a href="https://chinese-pr-delay.ca/" target="_blank" rel="noopener"
      style="color: #aaa; text-decoration: underline; margin-left: 4px;">
-    3·13 渥太华 / PR Justice Now
+    3·13 <span data-lang="zh">渥太华</span><span data-lang="en">Ottawa</span> / PR Justice Now
   </a>
 </div>
 
 <!-- HERO -->
 <section class="hero" style="padding-top: 80px;">
-  <span class="hero-badge">VAN501 · 温哥华 · 和平游行抗议</span>
-  <h1 class="hero-cn">VAN501·终结安调拖延</h1>
-  <p class="hero-en">VAN501 — End the Endless Wait</p>
+  <span class="hero-badge">VAN501 · <span data-lang="zh">温哥华 · 和平游行抗议</span><span data-lang="en">Vancouver · Peaceful Rally</span></span>
+  <h1 class="hero-cn"><span data-lang="zh">VAN501·终结PR拖延</span><span data-lang="en">VAN501·终结PR拖延</span></h1>
+  <p class="hero-en"><span data-lang="zh">VAN501 — End Indefinite PR Delays</span><span data-lang="en">VAN501 — End Indefinite PR Delays</span></p>
 
   <div class="hero-date-box">
-    <div class="hero-date-big">2026 · 五月一日</div>
+    <div class="hero-date-big"><span data-lang="zh">2026 · 五月一日</span><span data-lang="en">May 1, 2026</span></div>
     <div class="hero-date-sub">Friday, May 1, 2026 &nbsp;·&nbsp; 9:00 AM – 12:00 PM</div>
   </div>
 
   <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(212,160,23,0.15); border:1px solid var(--gold); padding:8px 18px; border-radius:2px; margin-bottom:16px; animation: fadeUp 0.7s 0.28s ease both;">
     <span style="font-size:0.9rem;">📌</span>
     <span style="font-size:0.78rem; font-weight:700; color:var(--ink-mid); letter-spacing:0.03em;">
-      以下流程与地点<strong style="color:var(--red);">暂定</strong>，将根据最终报名人数调整 &nbsp;·&nbsp; <em style="font-weight:400;">Schedule &amp; locations tentative, subject to change based on attendance</em>
+      <span data-lang="zh">以下流程与地点<strong style="color:var(--red);">暂定</strong>，将根据最终报名人数调整</span>
+      <span data-lang="en"><strong style="color:var(--red);">Tentative</strong> — schedule &amp; locations subject to change based on attendance</span>
     </span>
   </div>
 
@@ -689,39 +568,67 @@
     <div class="route-stop">
       <div class="route-stop-time">9:00</div>
       <div class="route-stop-name">Vancouver Art Gallery</div>
-      <div class="route-stop-desc">750 Hornby St<br/>集合 · 演讲<br/>Gather &amp; Speeches</div>
+      <div class="route-stop-desc">750 Hornby St<br/>
+        <span data-lang="zh">集合 · 演讲</span><span data-lang="en">Gather &amp; Speeches</span>
+      </div>
     </div>
     <div class="route-arrow">→</div>
     <div class="route-stop">
       <div class="route-stop-time">11:00</div>
-      <div class="route-stop-name">游行出发</div>
-      <div class="route-stop-desc">March Begins<br/>步行前往 IRCC</div>
+      <div class="route-stop-name"><span data-lang="zh">游行出发</span><span data-lang="en">March Begins</span></div>
+      <div class="route-stop-desc">
+        <span data-lang="zh">March Begins<br/>步行前往 IRCC</span>
+        <span data-lang="en">Walk to IRCC office</span>
+      </div>
     </div>
     <div class="route-arrow">→</div>
     <div class="route-stop reg-note">
       <div class="route-stop-time">11:10</div>
-      <div class="route-stop-name">IRCC 温哥华办公室</div>
-      <div class="route-stop-desc">1148 Hornby St<br/>喊口号<br/><em style="color:var(--gold); font-size:0.68rem; font-weight:700;">⚠️ 注册制 · Registration required</em></div>
+      <div class="route-stop-name">IRCC <span data-lang="zh">温哥华办公室</span><span data-lang="en">Vancouver Office</span></div>
+      <div class="route-stop-desc">1148 Hornby St<br/>
+        <span data-lang="zh">喊口号</span><span data-lang="en">Chants</span><br/>
+        <em style="color:var(--gold); font-size:0.68rem; font-weight:700;">⚠️ <span data-lang="zh">注册制 · Registration required</span><span data-lang="en">Registration required</span></em>
+      </div>
     </div>
   </div>
 
   <div class="hero-cta">
-    <a class="btn-primary" href="#join" style="background:var(--ink);">加入游行 / Join Rally</a>
-    <a class="btn-outline" href="#event">活动详情 / Event Details</a>
+    <a class="btn-primary" href="#join" style="background:var(--ink);">
+      <span data-lang="zh">加入游行 / Join Rally</span><span data-lang="en">Join the Rally</span>
+    </a>
+    <a class="btn-outline" href="#event">
+      <span data-lang="zh">活动详情 / Event Details</span><span data-lang="en">Event Details</span>
+    </a>
   </div>
 
-  <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:32px; padding-top:28px; border-top:1px solid var(--cream);">
+  <!-- Social icons row -->
+  <div style="display:flex; gap:24px; flex-wrap:wrap; justify-content:center; align-items:center; margin-top:32px; padding-top:28px; border-top:1px solid var(--cream);">
     <a href="https://www.instagram.com/van501.rally/" target="_blank" rel="noopener"
        style="display:flex; align-items:center; gap:8px; color:var(--ink-mid); text-decoration:none; font-size:0.88rem; font-weight:600; transition:color 0.2s;"
        onmouseover="this.style.color='#C13584'" onmouseout="this.style.color='var(--ink-mid)'">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
       </svg>
     </a>
+    <a href="https://x.com/VoicesFairCheck" target="_blank" rel="noopener"
+       style="display:flex; align-items:center; gap:8px; color:var(--ink-mid); text-decoration:none; font-size:0.88rem; font-weight:600; transition:color 0.2s;"
+       onmouseover="this.style.color='#000000'" onmouseout="this.style.color='var(--ink-mid)'">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.402 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.625 5.905-5.625Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>
+    </a>
+    <div style="position:relative;">
+      <button class="wechat-trigger" id="heroWechatBtn" onclick="toggleWechat('heroWechatPopup', 'heroWechatBtn')" aria-label="扫码加入微信群">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.295.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c-.276-.88-.425-1.814-.425-2.77C8.27 9.259 12.57 5.89 17.842 5.89c.353 0 .7.025 1.043.068C17.9 3.667 13.526 2.188 8.69 2.188zm-1.79 3.646a1.078 1.078 0 1 1 0 2.157 1.078 1.078 0 0 1 0-2.157zm4.943 0a1.078 1.078 0 1 1 0 2.157 1.078 1.078 0 0 1 0-2.157zM24 13.714c0-3.38-3.301-6.126-7.38-6.126-4.076 0-7.377 2.747-7.377 6.126 0 3.382 3.301 6.126 7.377 6.126.887 0 1.735-.13 2.524-.36a.683.683 0 0 1 .566.077l1.504.88a.257.257 0 0 0 .132.042.233.233 0 0 0 .233-.233c0-.057-.023-.113-.038-.168l-.308-1.168a.467.467 0 0 1 .168-.526C23.022 17.614 24 15.764 24 13.714zm-9.787-.638a.852.852 0 1 1 0-1.703.852.852 0 0 1 0 1.703zm4.814 0a.852.852 0 1 1 0-1.703.852.852 0 0 1 0 1.703z"/></svg>
+      </button>
+      <div class="wechat-popup" id="heroWechatPopup">
+        <img src="./wechat-qr.jpg" alt="微信群二维码" onerror="this.style.display='none';" />
+        <div class="wechat-popup-label">扫码加入微信群</div>
+        <div class="wechat-popup-sub">Join WeChat Group<br/>获取最新活动通知</div>
+      </div>
+    </div>
     <a href="mailto:bc.pr.delay@gmail.com"
        style="display:flex; align-items:center; gap:8px; color:var(--ink-mid); text-decoration:none; font-size:0.88rem; font-weight:600; transition:color 0.2s;"
        onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--ink-mid)'">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/>
       </svg>
     </a>
@@ -732,45 +639,54 @@
 <div class="counter-bar">
   <div class="counter-item">
     <div class="counter-num">30+</div>
-    <div class="counter-label">月 · 平均等待时间<br/>Months Avg. Wait</div>
+    <div class="counter-label"><span data-lang="zh">月 · 平均等待时间<br/>Months Avg. Wait</span><span data-lang="en">Months Avg. Wait<br/>平均等待时间</span></div>
   </div>
   <div class="counter-item">
     <div class="counter-num">23,000+</div>
-    <div class="counter-label">PR 安调积压案<br/>PR Applications in Backlog</div>
+    <div class="counter-label"><span data-lang="zh">PR 安调积压案<br/>PR Applications in Backlog</span><span data-lang="en">PR Applications in Backlog<br/>PR 安调积压案</span></div>
   </div>
   <div class="counter-item">
     <div class="counter-num">110</div>
-    <div class="counter-label">天 · 官方服务标准<br/>Days Official Standard</div>
+    <div class="counter-label"><span data-lang="zh">天 · 官方服务标准<br/>Days Official Standard</span><span data-lang="en">Days Official Standard<br/>官方服务标准</span></div>
   </div>
   <div class="counter-item">
     <div class="counter-num">55%</div>
-    <div class="counter-label">PR 申请超期积压率<br/>Applications Over Standard</div>
+    <div class="counter-label"><span data-lang="zh">PR 申请超期积压率<br/>Applications Over Standard</span><span data-lang="en">Applications Over Standard<br/>PR 申请超期积压率</span></div>
   </div>
 </div>
 
 <!-- WHY -->
 <section class="why" id="why">
   <div class="container">
-    <span class="section-label">为什么我们站出来 · Why We Stand</span>
-    <h2>我们是同一场运动<span class="en">One Movement, Across Canada</span></h2>
+    <span class="section-label"><span data-lang="zh">为什么我们站出来 · Why We Stand</span><span data-lang="en">Why We Stand</span></span>
+    <h2><span data-lang="zh">我们是同一场运动<span class="en">One Movement, Across Canada</span></span><span data-lang="en">One Movement, Across Canada</span></h2>
     <div class="divider"></div>
-    <p style="color:#C4B9AD; line-height:1.8; max-width:640px;">
-      2026年3月13日，数百人走上渥太华国会山，联合国会请愿 e-7259，共同发声。那次行动获得了两位参议员的公开支持与多家媒体的报道。此后，全国各地受影响居民积极联络本地国会议员，相继获得数位 MP 的支持。现在，同一场运动来到温哥华——我们不会停止，直到 IRCC、CSIS、CBSA 给出真实的改变。
+    <p style="color:#C4B9AD; line-height:1.8; max-width:640px;" data-lang="zh">
+      2026年3月13日，数百人走上渥太华国会山，联合国会请愿 e-7259，共同发声。那次行动赢得了两位参议员的公开支持，并获多家媒体报道。此后，全国各地受影响居民积极联络本地议员，陆续争取到数位 MP 的支持。一个多月过去，我们目睹身边不断有人出坑。回望2025年的漫长沉寂，恍如两个时空。势头不能停。同一场运动，现在来到温哥华。我们不会停止，直到 IRCC、CSIS、CBSA 给出真实的改变。
     </p>
-    <p style="color:#C4B9AD; line-height:1.8; max-width:640px; margin-top:12px;">
-      On March 13, 2026, hundreds marched on Parliament Hill alongside e-petition e-7259, making this crisis visible on the national stage. The action earned the public support of two senators and drew media coverage across the country. In the weeks that followed, affected residents across Canada reached out to their local MPs — and secured the support of several members of Parliament. The same movement now comes to Vancouver. We are not stopping until IRCC, CSIS, and CBSA act.
+    <p style="color:#C4B9AD; line-height:1.8; max-width:640px;" data-lang="en">
+      On March 13, 2026, hundreds marched to Parliament Hill in Ottawa, joining e-Petition e-7259 to make their voices heard. The action earned the public support of two senators and drew coverage from multiple media outlets. In the weeks that followed, affected residents across the country reached out to their local MPs — and secured the backing of several. More than a month on, we've watched people around us clear security clearance one after another. The momentum cannot stop. The same movement has now come to Vancouver. We will not stop until IRCC, CSIS, and CBSA deliver real change.
     </p>
+
     <a href="https://chinese-pr-delay.ca/" target="_blank" rel="noopener"
        style="display:flex; align-items:center; gap:20px; background:rgba(255,255,255,0.06); border:1px solid rgba(212,160,23,0.4); padding:20px 24px; margin: 40px 0 0; text-decoration:none; transition: background 0.2s;"
        onmouseover="this.style.background='rgba(255,255,255,0.1)'"
        onmouseout="this.style.background='rgba(255,255,255,0.06)'">
-      <span style="font-size:2rem; flex-shrink:0;">🏛️</span>
       <div>
-        <div style="color: var(--gold-light); font-weight:700; font-size:0.95rem; margin-bottom:4px;">
-          PR Justice Now — 3·13 渥太华国会山游行
+        <div style="margin: 0 0 16px; border-radius: 2px; overflow: hidden; position: relative;">
+          <img src="https://chinese-pr-delay.ca/events/march-13-2026/march13-30-DSC00944.jpg"
+            alt="3·13 Ottawa Parliament Hill Rally"
+            style="width: 100%; max-height: 480px; object-fit: cover; display: block; filter: brightness(0.92);" />
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(26,16,8,0.75)); padding: 24px 24px 18px; color: white; font-size: 0.8rem; letter-spacing: 0.04em;">
+            📸 2026-03-13 · Ottawa Parliament Hill · 3·13 PR Justice Now
+          </div>
         </div>
-        <div style="color:#C4B9AD; font-size:0.83rem; line-height:1.6;">
+        <div style="color:#C4B9AD; font-size:0.83rem; line-height:1.6;" data-lang="zh">
           同一场运动的全国主页。阅读受影响家庭的故事、了解诉求详情、查看 e-7259 请愿成果。
+          <span style="color:var(--gold-light);">chinese-pr-delay.ca →</span>
+        </div>
+        <div style="color:#C4B9AD; font-size:0.83rem; line-height:1.6;" data-lang="en">
+          The national homepage of this movement. Read stories from affected families, learn about our demands, and see the results of e-7259.
           <span style="color:var(--gold-light);">chinese-pr-delay.ca →</span>
         </div>
       </div>
@@ -779,23 +695,27 @@
     <div class="why-grid">
       <div class="why-card">
         <div class="why-card-num">01</div>
-        <h3>极端拖延，超乎想象</h3>
-        <p>安全背景调查平均等待超过30个月，远超官方110天服务标准，是应有时限的8倍以上。</p>
+        <h3><span data-lang="zh">极端拖延，超乎想象</span><span data-lang="en">Extreme Delays</span></h3>
+        <p data-lang="zh">安全背景调查平均等待超过30个月，远超官方110天服务标准，是应有时限的8倍以上。</p>
+        <p data-lang="en">Security background checks average over 30 months — more than 8 times IRCC's official 110-day service standard.</p>
       </div>
       <div class="why-card">
         <div class="why-card-num">02</div>
-        <h3>313证明：行动有效</h3>
-        <p>3月13日渥太华游行吸引大量媒体关注，推动国会提出 e-7259 请愿，证明有组织的抗议能够带来改变。</p>
+        <h3><span data-lang="zh">313证明：行动有效</span><span data-lang="en">March 13 Proved Action Works</span></h3>
+        <p data-lang="zh">3月13日渥太华游行吸引大量媒体关注，推动国会提出 e-7259 请愿，证明有组织的抗议能够带来改变。</p>
+        <p data-lang="en">The Ottawa march drew major media attention and led to e-petition e-7259, earning the support of two senators. Organized action brings change.</p>
       </div>
       <div class="why-card">
         <div class="why-card-num">03</div>
-        <h3>温哥华必须发声</h3>
-        <p>BC省有大量受影响申请人。全国联动、持续施压，才能让 IRCC 无法忽视这场危机。</p>
+        <h3><span data-lang="zh">温哥华必须发声</span><span data-lang="en">Vancouver Must Speak Up</span></h3>
+        <p data-lang="zh">BC省有大量受影响申请人。全国联动、持续施压，才能让 IRCC 无法忽视这场危机。</p>
+        <p data-lang="en">BC has a large number of affected applicants. Sustained, coast-to-coast pressure is the only way to force IRCC to act.</p>
       </div>
       <div class="why-card">
         <div class="why-card-num">04</div>
-        <h3>人道代价正在发生</h3>
-        <p>家庭分离、失去合法身份、心理危机、职业停滞——这些不是数字，是真实发生在我们邻居身上的故事。</p>
+        <h3><span data-lang="zh">人道代价正在发生</span><span data-lang="en">Real Human Cost</span></h3>
+        <p data-lang="zh">家庭分离、失去合法身份、心理危机、职业停滞——这些不是数字，是真实发生在我们邻居身上的故事。</p>
+        <p data-lang="en">Family separation, loss of legal status, mental health crises, career stagnation — these are not statistics. They are our neighbors' stories.</p>
       </div>
     </div>
   </div>
@@ -804,33 +724,39 @@
 <!-- DEMANDS -->
 <section class="demands" id="demands">
   <div class="container">
-    <span class="section-label">我们的诉求 · Our Demands</span>
-    <h2>我们要求<span class="en">What We Are Calling For</span></h2>
+    <span class="section-label"><span data-lang="zh">我们的诉求 · Our Demands</span><span data-lang="en">Our Demands</span></span>
+    <h2><span data-lang="zh">我们要求<span class="en">What We Are Calling For</span></span><span data-lang="en">What We Are Calling For</span></h2>
     <div class="divider"></div>
-    <p style="color:var(--ink-mid); line-height:1.8; max-width:640px;">
+    <p style="color:var(--ink-mid); line-height:1.8; max-width:640px;" data-lang="zh">
       与313一致，我们要求 IRCC / CSIS / CBSA 切实回应以下三点核心诉求：
+    </p>
+    <p style="color:var(--ink-mid); line-height:1.8; max-width:640px;" data-lang="en">
+      Aligned with the March 13 action, we call on IRCC, CSIS, and CBSA to address three core demands:
     </p>
 
     <div class="demands-list">
       <div class="demand-item">
         <div class="demand-num">01</div>
         <div class="demand-body">
-          <h3>加快安调速度 — 设定明确时限</h3>
-          <p>要求 IRCC、CSIS、CBSA 在合理时间内完成安全背景调查，并向申请人公开处理阶段与预计完成时间。已完成 CSIS 审查的申请人，CBSA 应在30天内完成最终处理。</p>
+          <h3><span data-lang="zh">加快安调速度 — 设定明确时限</span><span data-lang="en">Speed Up Processing — Set Clear Timelines</span></h3>
+          <p data-lang="zh">依据《移民和难民保护法》，以立法形式确立安全审查12个月的法定上限；对于等待时间超出公布标准100%及以上的申请人，须提供强制性书面说明，并给予临时救济措施。</p>
+          <p data-lang="en">Establish a statutory 12-month ceiling on security screening under IRPA, with mandatory written justification and interim relief for applicants exceeding published standards by 100% or more.</p>
         </div>
       </div>
       <div class="demand-item">
         <div class="demand-num">02</div>
         <div class="demand-body">
-          <h3>提高透明度 — 主动告知进展</h3>
-          <p>要求每90天主动更新案件状态，包括当前由哪一机构处理、处于何阶段、预计何时完成。申请人有权利了解自己案件的进展。</p>
+          <h3><span data-lang="zh">提高透明度 — 主动告知进展</span><span data-lang="en">Transparency — Proactive Updates</span></h3>
+          <p data-lang="zh">要求每90天主动更新案件状态，包括当前由哪一机构处理、处于何阶段、预计何时完成。申请人有权利了解自己案件的进展。</p>
+          <p data-lang="en">Applicants must receive proactive updates every 90 days, including which agency currently holds their file, the current stage, and the expected completion date. Applicants have a right to know where their case stands.</p>
         </div>
       </div>
       <div class="demand-item">
         <div class="demand-num">03</div>
         <div class="demand-body">
-          <h3>建立问责机制 — 设立独立监督</h3>
-          <p>设立独立移民监察专员，有权调查 IRCC 处理拖延、强制回应申请人投诉；建立 CBSA 移民安全审查独立监督机构，确保问责有依据、有后果。</p>
+          <h3><span data-lang="zh">建立问责机制 — 设立独立监督</span><span data-lang="en">Accountability — Independent Oversight</span></h3>
+          <p data-lang="zh">设立独立移民监察专员，有权调查 IRCC 处理拖延、强制回应申请人投诉；建立 CBSA 移民安全审查独立监督机构，确保问责有依据、有后果。</p>
+          <p data-lang="en">Establish an independent immigration ombudsperson empowered to investigate IRCC processing delays and compel responses to complaints. Create an independent oversight body for CBSA immigration security reviews to ensure accountability has teeth.</p>
         </div>
       </div>
     </div>
@@ -840,30 +766,32 @@
 <!-- PETITION e-7341 -->
 <section id="petition" style="background: var(--ink); color: var(--paper); padding: 80px 24px;">
   <div class="container">
-    <span class="section-label" style="color: var(--gold-light);">立即行动 · Take Action Now</span>
-    <h2 style="color:var(--paper);">签署请愿 · 联络议员<span class="en" style="color:var(--gray);">Sign the Petition · Contact Your MP</span></h2>
+    <span class="section-label" style="color: var(--gold-light);"><span data-lang="zh">立即行动 · Take Action Now</span><span data-lang="en">Take Action Now</span></span>
+    <h2 style="color:var(--paper);"><span data-lang="zh">签署请愿 · 联络议员<span class="en" style="color:var(--gray);">Sign the Petition · Contact Your MP</span></span><span data-lang="en">Sign the Petition · Contact Your MP</span></h2>
     <div class="divider" style="background:var(--gold);"></div>
 
-    <p style="color:#C4B9AD; line-height:1.8; max-width:680px; margin-bottom:32px;">
-  游行只是开始——场外施压同样关键
-  5月1日走上街头，但改变不只发生在街上。
-  ① 签署请愿：推动国会启动对移民安全审查延误的正式调查。人数越多，议员越难忽视。
-  ② 联系你的 MP：亲自去信或打电话，告诉他们这件事如何影响了你的生活。一封真实的信，比一百个签名更有分量。
-  游行当天，我们是人群；场外行动时，我们是选民。    
-  </p>
+    <p style="color:#C4B9AD; line-height:1.8; max-width:680px; margin-bottom:32px;" data-lang="zh">
+      游行只是开始——场外施压同样关键。5月1日走上街头，但改变不只发生在街上。① 签署请愿：推动国会启动对移民安全审查延误的正式调查。人数越多，议员越难忽视。② 联系你的 MP：亲自去信或打电话，告诉他们这件事如何影响了你的生活。一封真实的信，比一百个签名更有分量。游行当天，我们是人群；场外行动时，我们是选民。
+    </p>
+    <p style="color:#C4B9AD; line-height:1.8; max-width:680px; margin-bottom:32px;" data-lang="en">
+      The march is just the beginning — off-street pressure matters just as much. ① Sign the petition: push Parliament to launch a formal investigation into immigration security screening delays. More signatures means MPs can't ignore us. ② Contact your MP: write or call to explain how this has affected your life. One real letter outweighs a hundred signatures. On march day we are a crowd; in off-street action we are constituents.
+    </p>
 
     <!-- Step 1: Petition -->
     <div style="display:flex; gap:16px; align-items:flex-start; margin-bottom:32px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-left:4px solid var(--gold); padding:20px 24px;">
       <div style="font-family:'DM Serif Display',serif; font-size:2.2rem; color:var(--gold); opacity:0.6; line-height:1; flex-shrink:0;">1</div>
       <div style="flex:1;">
-        <div style="color:var(--paper); font-weight:700; font-size:1rem; margin-bottom:6px;">签署国会请愿 e-7341</div>
-        <div style="color:#C4B9AD; font-size:0.85rem; line-height:1.7; margin-bottom:16px;">加拿大公民和居民均可签署（含工签、学签持有者），需通过邮件确认。</div>
+        <div style="color:var(--paper); font-weight:700; font-size:1rem; margin-bottom:6px;">
+          <span data-lang="zh">签署国会请愿 e-7341</span><span data-lang="en">Sign e-Petition e-7341</span>
+        </div>
+        <div style="color:#C4B9AD; font-size:0.85rem; line-height:1.7; margin-bottom:16px;" data-lang="zh">加拿大公民和居民均可签署（含工签、学签持有者），需通过邮件确认。</div>
+        <div style="color:#C4B9AD; font-size:0.85rem; line-height:1.7; margin-bottom:16px;" data-lang="en">Open to Canadian citizens and residents (including work and study permit holders). Email confirmation required.</div>
         <a href="https://www.ourcommons.ca/petitions/en/Petition/Details?Petition=e-7341"
            target="_blank" rel="noopener"
            style="display:inline-block; background:var(--gold); color:var(--ink); font-size:0.95rem; font-weight:800; letter-spacing:0.05em; padding:13px 32px; border-radius:2px; text-decoration:none; transition: background 0.2s;"
            onmouseover="this.style.background='var(--gold-light)'"
            onmouseout="this.style.background='var(--gold)'">
-          签署请愿 / Sign the Petition →
+          <span data-lang="zh">签署请愿 / Sign the Petition →</span><span data-lang="en">Sign the Petition →</span>
         </a>
       </div>
     </div>
@@ -872,66 +800,65 @@
     <div style="display:flex; gap:16px; align-items:flex-start; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-left:4px solid var(--gold); padding:20px 24px;">
       <div style="font-family:'DM Serif Display',serif; font-size:2.2rem; color:var(--gold); opacity:0.6; line-height:1; flex-shrink:0;">2</div>
       <div style="flex:1;">
-        <div style="font-family:'Noto Serif SC',serif; font-size:1.15rem; font-weight:700; color:var(--gold-light); margin-bottom:6px;">给你的国会议员写信 / Write to Your MP</div>
-        <div style="font-size:0.85rem; color:rgba(255,255,255,0.65); line-height:1.65; margin-bottom:20px;">
-          议员直接收到选民来信是最有力的施压方式之一。按以下两步操作：<br/>
-          <em style="color:rgba(255,255,255,0.4);">A letter from a constituent is one of the most powerful actions you can take. Two steps:</em>
+        <div style="font-family:'Noto Serif SC',serif; font-size:1.15rem; font-weight:700; color:var(--gold-light); margin-bottom:6px;">
+          <span data-lang="zh">给你的国会议员写信 / Write to Your MP</span><span data-lang="en">Write to Your MP</span>
+        </div>
+        <div style="font-size:0.85rem; color:rgba(255,255,255,0.65); line-height:1.65; margin-bottom:20px;" data-lang="zh">
+          议员直接收到选民来信是最有力的施压方式之一。按以下两步操作：
+        </div>
+        <div style="font-size:0.85rem; color:rgba(255,255,255,0.65); line-height:1.65; margin-bottom:20px;" data-lang="en">
+          A letter from a constituent is one of the most powerful actions you can take. Two steps:
         </div>
 
         <div class="mp-steps">
-          <!-- Sub-step A: Find MP -->
           <div class="mp-step">
             <div class="mp-step-num">A</div>
             <div class="mp-step-body">
-              <div class="mp-step-label">查找你的议员 / Find Your MP</div>
-              <div class="mp-step-desc">点击下方按钮，在国会官网输入你的邮编，找到议员姓名和邮件地址后回到此页。<br/>
-                <em>Click below, enter your postal code on the Parliament website, then copy your MP's name and email back here.</em>
-              </div>
-              <a class="mp-find-btn"
-                 href="https://www.ourcommons.ca/members/en/search"
-                 target="_blank" rel="noopener">
-                前往 ourcommons.ca 查找 / Find on Parliament Site →
+              <div class="mp-step-label"><span data-lang="zh">查找你的议员 / Find Your MP</span><span data-lang="en">Find Your MP</span></div>
+              <div class="mp-step-desc" data-lang="zh">点击下方按钮，在国会官网输入你的邮编，找到议员姓名和邮件地址后回到此页。</div>
+              <div class="mp-step-desc" data-lang="en">Click below, enter your postal code on the Parliament website, then copy your MP's name and email back here.</div>
+              <a class="mp-find-btn" href="https://www.ourcommons.ca/members/en/search" target="_blank" rel="noopener">
+                <span data-lang="zh">前往 ourcommons.ca 查找 →</span><span data-lang="en">Find on Parliament Site →</span>
               </a>
             </div>
           </div>
-
-          <!-- Sub-step B: Enter details & generate letter -->
           <div class="mp-step">
             <div class="mp-step-num">B</div>
             <div class="mp-step-body">
-              <div class="mp-step-label">填写信息，生成信件 / Enter Details &amp; Generate Letter</div>
-              <div class="mp-step-desc">将议员姓名、邮箱填入下方，我们将为你生成一封英语信件模板。<br/>
-                <em>Fill in the details below and we'll generate an English letter template for you.</em>
-              </div>
+              <div class="mp-step-label"><span data-lang="zh">填写信息，生成信件</span><span data-lang="en">Enter Details &amp; Generate Letter</span></div>
+              <div class="mp-step-desc" data-lang="zh">将议员姓名、邮箱填入下方，我们将为你生成一封英语信件模板。</div>
+              <div class="mp-step-desc" data-lang="en">Fill in the details below and we'll generate an English letter template for you.</div>
 
               <div class="mp-entry-form">
                 <div class="mp-entry-row">
                   <div class="mp-entry-field">
-                    <label>你的姓名 / Your Name *</label>
+                    <label><span data-lang="zh">你的姓名 / Your Name *</span><span data-lang="en">Your Name *</span></label>
                     <input type="text" id="senderNameMain" placeholder="Your full name" />
                   </div>
                 </div>
                 <div class="mp-entry-row">
                   <div class="mp-entry-field">
-                    <label>议员姓名 / MP Name *</label>
+                    <label><span data-lang="zh">议员姓名 / MP Name *</span><span data-lang="en">MP Name *</span></label>
                     <input type="text" id="mpNameInput" placeholder="e.g. Jenny Kwan" />
                   </div>
                   <div class="mp-entry-field">
-                    <label>议员邮箱 / MP Email</label>
+                    <label><span data-lang="zh">议员邮箱 / MP Email</span><span data-lang="en">MP Email</span></label>
                     <input type="email" id="mpEmailInput" placeholder="firstname.lastname@parl.gc.ca" />
                   </div>
                 </div>
                 <div class="mp-entry-row">
                   <div class="mp-entry-field">
-                    <label>选区 / Riding (optional)</label>
+                    <label><span data-lang="zh">选区 / Riding (optional)</span><span data-lang="en">Riding (optional)</span></label>
                     <input type="text" id="mpRidingInput" placeholder="e.g. Vancouver East" />
                   </div>
                 </div>
                 <button class="mp-generate-btn" onclick="generateLetter()">
-                  生成信件模板 / Generate Letter
+                  <span data-lang="zh">生成信件模板 / Generate Letter</span><span data-lang="en">Generate Letter</span>
                 </button>
-                <div class="mp-entry-note">
-                  议员邮箱格式通常为 firstname.lastname@parl.gc.ca，可在 ourcommons.ca 议员主页确认。<br/>
+                <div class="mp-entry-note" data-lang="zh" style="font-size:0.75rem; color:rgba(255,255,255,0.4); margin-top:8px; line-height:1.6;">
+                  议员邮箱格式通常为 firstname.lastname@parl.gc.ca，可在 ourcommons.ca 议员主页确认。
+                </div>
+                <div class="mp-entry-note" data-lang="en" style="font-size:0.75rem; color:rgba(255,255,255,0.4); margin-top:8px; line-height:1.6;">
                   MP emails typically follow the pattern firstname.lastname@parl.gc.ca — confirm on their profile page.
                 </div>
               </div>
@@ -941,14 +868,19 @@
       </div>
     </div>
 
-    <!-- Existing e-7259 note -->
     <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); padding:20px 24px; display:flex; gap:20px; align-items:flex-start; margin-top:32px;">
       <div>
-        <div style="color:var(--paper); font-weight:700; font-size:0.9rem; margin-bottom:6px;">已有成果：e-7259 请愿（3·13 渥太华行动推动）</div>
-        <div style="color:#C4B9AD; font-size:0.83rem; line-height:1.7;">
+        <div style="color:var(--paper); font-weight:700; font-size:0.9rem; margin-bottom:6px;">
+          <span data-lang="zh">已有成果：e-7259 请愿（3·13 渥太华行动推动）</span>
+          <span data-lang="en">Prior Result: e-7259 Petition (from the March 13 Ottawa action)</span>
+        </div>
+        <div style="color:#C4B9AD; font-size:0.83rem; line-height:1.7;" data-lang="zh">
           由 MP Jenny Kwan 赞助，3·13 渥太华游行推动发起，呼吁国会为 PR 安全审查设定明确时限、提高透明度与问责。已征集10,000+签名。
-          <a href="https://www.ourcommons.ca/petitions/en/Petition/Details?Petition=e-7259" target="_blank" rel="noopener"
-             style="color:var(--gold-light); margin-left:6px;">查看 e-7259 →</a>
+          <a href="https://www.ourcommons.ca/petitions/en/Petition/Details?Petition=e-7259" target="_blank" rel="noopener" style="color:var(--gold-light); margin-left:6px;">查看 e-7259 →</a>
+        </div>
+        <div style="color:#C4B9AD; font-size:0.83rem; line-height:1.7;" data-lang="en">
+          Sponsored by MP Jenny Kwan and launched following the March 13 Ottawa march, calling on Parliament to set clear timelines, improve transparency, and strengthen accountability for PR security reviews. Over 10,000 signatures collected.
+          <a href="https://www.ourcommons.ca/petitions/en/Petition/Details?Petition=e-7259" target="_blank" rel="noopener" style="color:var(--gold-light); margin-left:6px;">View e-7259 →</a>
         </div>
       </div>
     </div>
@@ -958,62 +890,72 @@
 <!-- EVENT DETAILS -->
 <section class="event" id="event">
   <div class="container">
-    <span class="section-label">活动详情 · Event Details</span>
-    <h2>VAN501 · 5·1 温哥华行动<span class="en">VAN501 — May 1 Vancouver Action</span></h2>
+    <span class="section-label"><span data-lang="zh">活动详情 · Event Details</span><span data-lang="en">Event Details</span></span>
+    <h2><span data-lang="zh">VAN501 · 5·1 温哥华行动<span class="en">VAN501 — May 1 Vancouver Action</span></span><span data-lang="en">VAN501 — May 1 Vancouver Action</span></h2>
     <div class="divider"></div>
 
     <div style="display:flex; align-items:center; gap:10px; background:rgba(212,160,23,0.15); border:1px solid var(--gold-light); border-left:4px solid var(--gold-light); padding:12px 18px; margin-bottom:24px;">
       <span style="font-size:1.1rem; flex-shrink:0;">📌</span>
-      <span style="font-size:0.85rem; line-height:1.6; color:white;">
-        <strong style="color:var(--gold-light);">暂定方案</strong> — 以下流程与地点将根据最终报名人数进行调整，请持续关注我们的社媒和邮件通知。<br/>
-        <em style="color:rgba(255,255,255,0.65); font-size:0.8rem;">Schedule &amp; locations are tentative and subject to change depending on final attendance numbers.</em>
+      <span style="font-size:0.85rem; line-height:1.6; color:white;" data-lang="zh">
+        <strong style="color:var(--gold-light);">暂定方案</strong> — 以下流程与地点将根据最终报名人数进行调整，请持续关注我们的社媒和邮件通知。
+      </span>
+      <span style="font-size:0.85rem; line-height:1.6; color:white;" data-lang="en">
+        <strong style="color:var(--gold-light);">Tentative</strong> — Schedule &amp; locations subject to change depending on final attendance numbers. Follow our social media for updates.
       </span>
     </div>
 
     <div class="reg-info-box" style="background:rgba(212,160,23,0.15); border-color:var(--gold-light); margin-bottom:40px;">
       <div class="reg-info-box-title" style="color:var(--gold-light);">
-        <span>⚠️</span> 关于 IRCC 楼前的注册制说明
+        <span>⚠️</span>
+        <span data-lang="zh">关于 IRCC 楼前的注册制说明</span>
+        <span data-lang="en">Registration Notice for IRCC Building</span>
       </div>
-      <p style="color:rgba(255,255,255,0.8);">
+      <p style="color:rgba(255,255,255,0.8);" data-lang="zh">
         因控制人数需要，在 IRCC 温哥华办公楼（1148 Hornby St）前进行的部分活动需要事先注册登记。Vancouver Art Gallery 阶段（9:00–11:00）对所有人开放，欢迎注册，以便我们统计人数。请通过报名表或邮件联系我们以确认 IRCC 楼前的参与名额。
+      </p>
+      <p style="color:rgba(255,255,255,0.8);" data-lang="en">
+        To manage capacity, activities at the IRCC Vancouver office (1148 Hornby St) require prior registration. The Vancouver Art Gallery phase (9:00–11:00) is open to all — registration is welcome but not required. Please use the signup form or email us to confirm your spot for the IRCC building phase.
       </p>
     </div>
 
     <div class="event-grid">
       <div>
         <div class="event-detail">
-          <div class="event-detail-label">日期 Date</div>
-          <div class="event-detail-val">2026年5月1日（周五）<br/>Friday, May 1, 2026</div>
+          <div class="event-detail-label"><span data-lang="zh">日期 Date</span><span data-lang="en">Date</span></div>
+          <div class="event-detail-val"><span data-lang="zh">2026年5月1日（周五）<br/>Friday, May 1, 2026</span><span data-lang="en">Friday, May 1, 2026</span></div>
         </div>
         <div class="event-detail">
-          <div class="event-detail-label">第一阶段 Phase 1</div>
+          <div class="event-detail-label"><span data-lang="zh">第一阶段 Phase 1</span><span data-lang="en">Phase 1</span></div>
           <div class="event-detail-val">9:00 AM — 11:00 AM<br/>Vancouver Art Gallery<br/><small style="opacity:0.7;">750 Hornby St</small></div>
         </div>
         <div class="event-detail">
-          <div class="event-detail-label">第二阶段 Phase 2</div>
-          <div class="event-detail-val">11:00 AM — 12:00 PM<br/>IRCC 温哥华办公室<br/><small style="color:var(--gold-light);">1148 Hornby St · ⚠️ 注册制 Registration req.</small></div>
+          <div class="event-detail-label"><span data-lang="zh">第二阶段 Phase 2</span><span data-lang="en">Phase 2</span></div>
+          <div class="event-detail-val">11:00 AM — 12:00 PM<br/>IRCC <span data-lang="zh">温哥华办公室</span><span data-lang="en">Vancouver Office</span><br/><small style="color:var(--gold-light);">1148 Hornby St · ⚠️ <span data-lang="zh">注册制</span><span data-lang="en">Registration req.</span></small></div>
         </div>
         <div class="event-detail">
-          <div class="event-detail-label">形式 Format</div>
-          <div class="event-detail-val">演讲 + 游行 + 喊口号<br/>Speeches, march &amp; chants</div>
+          <div class="event-detail-label"><span data-lang="zh">形式 Format</span><span data-lang="en">Format</span></div>
+          <div class="event-detail-val" data-lang="zh">演讲 + 游行 + 喊口号<br/>Speeches, march &amp; chants</div>
+          <div class="event-detail-val" data-lang="en">Speeches, march &amp; chants</div>
         </div>
       </div>
 
       <div>
-        <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:16px;">当日流程 Schedule</div>
+        <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:16px;">
+          <span data-lang="zh">当日流程 Schedule</span><span data-lang="en">Schedule</span>
+        </div>
         <ul class="schedule">
-          <li class="phase-marker"><span style="width:60px; display:inline-block;">第一阶段</span> Vancouver Art Gallery</li>
-          <li><span class="time">8:45</span><span>核心岗位人员提前到场布置</span></li>
-          <li><span class="time">9:00</span><span>集合，发放物资与须知卡片</span></li>
-          <li><span class="time">9:15</span><span>开场发言，现场领队带领口号</span></li>
-          <li><span class="time">9:15–10:45</span><span>发言人演讲 + 喊口号<br/><small style="opacity:0.6;">社媒实时发布</small></span></li>
-          <li><span class="time">10:50</span><span>集合准备游行出发</span></li>
-          <li class="phase-marker"><span style="width:60px; display:inline-block;">游行</span> March to IRCC · ~10 min walk</li>
-          <li><span class="time">11:00</span><span>🚶 从 Art Gallery 出发步行</span></li>
-          <li class="phase-marker"><span style="width:60px; display:inline-block;">第二阶段</span> IRCC 大楼前 · 注册制 ⚠️</li>
-          <li><span class="time">11:10</span><span>抵达 1148 Hornby，喊口号</span></li>
-          <li><span class="time">11:45</span><span>结束发言，告知下一步行动</span></li>
-          <li><span class="time">12:00</span><span>有序散场</span></li>
+          <li class="phase-marker"><span style="width:60px; display:inline-block;"><span data-lang="zh">第一阶段</span><span data-lang="en">Phase 1</span></span> Vancouver Art Gallery</li>
+          <li><span class="time">8:45</span><span data-lang="zh">核心岗位人员提前到场布置</span><span data-lang="en">Core team arrives early to set up</span></li>
+          <li><span class="time">9:00</span><span data-lang="zh">集合，发放物资与须知卡片</span><span data-lang="en">Gather, distribute materials &amp; info cards</span></li>
+          <li><span class="time">9:15</span><span data-lang="zh">开场发言，现场领队带领口号</span><span data-lang="en">Opening remarks, lead chants</span></li>
+          <li><span class="time">9:15–10:45</span><span data-lang="zh">发言人演讲 + 喊口号<br/><small style="opacity:0.6;">社媒实时发布</small></span><span data-lang="en">Speakers &amp; chants<br/><small style="opacity:0.6;">Live social media coverage</small></span></li>
+          <li><span class="time">10:50</span><span data-lang="zh">集合准备游行出发</span><span data-lang="en">Assemble for march departure</span></li>
+          <li class="phase-marker"><span style="width:60px; display:inline-block;"><span data-lang="zh">游行</span><span data-lang="en">March</span></span> → IRCC · ~10 min walk</li>
+          <li><span class="time">11:00</span><span data-lang="zh">🚶 从 Art Gallery 出发步行</span><span data-lang="en">🚶 March departs from Art Gallery</span></li>
+          <li class="phase-marker"><span style="width:60px; display:inline-block;"><span data-lang="zh">第二阶段</span><span data-lang="en">Phase 2</span></span> IRCC · ⚠️ <span data-lang="zh">注册制</span><span data-lang="en">Reg. req.</span></li>
+          <li><span class="time">11:10</span><span data-lang="zh">抵达 1148 Hornby，喊口号</span><span data-lang="en">Arrive at 1148 Hornby, chants</span></li>
+          <li><span class="time">11:45</span><span data-lang="zh">结束发言，告知下一步行动</span><span data-lang="en">Closing remarks, next steps</span></li>
+          <li><span class="time">12:00</span><span data-lang="zh">有序散场</span><span data-lang="en">Orderly dispersal</span></li>
         </ul>
       </div>
     </div>
@@ -1023,45 +965,67 @@
 <!-- JOIN -->
 <section class="join" id="join">
   <div class="container">
-    <span class="section-label">加入我们 · Join Us</span>
-    <h2>我们需要你<span class="en">Every Voice Counts</span></h2>
+    <span class="section-label"><span data-lang="zh">加入我们 · Join Us</span><span data-lang="en">Join Us</span></span>
+    <h2><span data-lang="zh">我们需要你<span class="en">Every Voice Counts</span></span><span data-lang="en">Every Voice Counts</span></h2>
     <div class="divider"></div>
-    <p style="color:var(--ink-mid); line-height:1.8; max-width:600px; margin-bottom:24px;">
+    <p style="color:var(--ink-mid); line-height:1.8; max-width:600px; margin-bottom:24px;" data-lang="zh">
       无论你是受影响的申请人、支持者、还是关心移民公正的每一个人，我们都欢迎你。带上你的故事，和我们一起站出来。
     </p>
+    <p style="color:var(--ink-mid); line-height:1.8; max-width:600px; margin-bottom:24px;" data-lang="en">
+      Whether you are an affected applicant, a supporter, or simply someone who cares about immigration justice — you are welcome here. Bring your story and stand with us.
+    </p>
 
-    <div class="reg-info-box" style="margin-bottom:40px;">
-      <div class="reg-info-box-title">参与方式说明</div>
-      <p>
+    <div class="reg-info-box" style="margin-bottom:32px;">
+      <div class="reg-info-box-title"><span data-lang="zh">参与方式说明</span><span data-lang="en">How to Participate</span></div>
+      <p data-lang="zh">
         <strong>Vancouver Art Gallery（9:00–11:00）：</strong>注册非必须，但欢迎提前注册，以便我们估计人数。<br/>
         <strong>IRCC 大楼前（11:10–12:00）：</strong>需要提前注册登记，请填写下方报名表或发送邮件确认。
       </p>
+      <p data-lang="en">
+        <strong>Vancouver Art Gallery (9:00–11:00):</strong> Registration is not required but welcome — it helps us estimate turnout.<br/>
+        <strong>IRCC Building (11:10–12:00):</strong> Pre-registration is required. Please complete the form below or email us to confirm your spot.
+      </p>
     </div>
 
-    <div style="text-align:center; margin-bottom:56px;">
+    <div style="text-align:center; margin-top:40px; margin-bottom:56px;">
       <a class="btn-primary" href="https://forms.gle/S4HNSefmseQtQeoo6" style="font-size:1rem; padding:16px 40px; display:inline-block; margin-bottom:16px;">
-        报名参与 / Register to Join
+        <span data-lang="zh">报名参与 / Register to Join</span><span data-lang="en">Register to Join</span>
       </a>
-      <p style="margin-top:12px; font-size:0.82rem; color:var(--gray);"></p>
-      <p style="margin-top:12px; font-size:0.82rem; color:var(--gray);">点击填写报名表，我们会在活动前发送最终提醒与参与信息</p>
+      <p style="margin-top:12px; font-size:0.82rem; color:var(--gray);" data-lang="zh">点击填写报名表，我们会在活动前发送最终提醒与参与信息</p>
+      <p style="margin-top:12px; font-size:0.82rem; color:var(--gray);" data-lang="en">Complete the form and we'll send you a final reminder with all event details before May 1.</p>
       <p style="margin-top:8px; font-size:0.82rem; color:var(--gray);">
-        或发送邮件联系我们 · Email us：
+        <span data-lang="zh">或发送邮件联系我们 · </span><span data-lang="en">Or email us: </span>
         <a href="mailto:bc.pr.delay@gmail.com" style="color:var(--red); font-weight:600;">bc.pr.delay@gmail.com</a>
+        &nbsp;·&nbsp;
+        <div style="position:relative; display:inline-block; vertical-align:middle;">
+          <button class="wechat-trigger" id="joinWechatBtn" onclick="toggleWechat('joinWechatPopup', 'joinWechatBtn')" style="font-size:0.82rem; font-weight:600; color:var(--wechat); vertical-align:middle; display:inline-flex; align-items:center; gap:5px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.295.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c-.276-.88-.425-1.814-.425-2.77C8.27 9.259 12.57 5.89 17.842 5.89c.353 0 .7.025 1.043.068C17.9 3.667 13.526 2.188 8.69 2.188zm-1.79 3.646a1.078 1.078 0 1 1 0 2.157 1.078 1.078 0 0 1 0-2.157zm4.943 0a1.078 1.078 0 1 1 0 2.157 1.078 1.078 0 0 1 0-2.157zM24 13.714c0-3.38-3.301-6.126-7.38-6.126-4.076 0-7.377 2.747-7.377 6.126 0 3.382 3.301 6.126 7.377 6.126.887 0 1.735-.13 2.524-.36a.683.683 0 0 1 .566.077l1.504.88a.257.257 0 0 0 .132.042.233.233 0 0 0 .233-.233c0-.057-.023-.113-.038-.168l-.308-1.168a.467.467 0 0 1 .168-.526C23.022 17.614 24 15.764 24 13.714zm-9.787-.638a.852.852 0 1 1 0-1.703.852.852 0 0 1 0 1.703zm4.814 0a.852.852 0 1 1 0-1.703.852.852 0 0 1 0 1.703z"/></svg>
+            <span data-lang="zh">微信群</span><span data-lang="en">WeChat</span>
+          </button>
+          <div class="wechat-popup" id="joinWechatPopup">
+            <img src="./wechat-qr.jpg" alt="微信群二维码" />
+            <div class="wechat-popup-label">扫码加入微信群</div>
+            <div class="wechat-popup-sub">Join WeChat Group<br/>获取最新活动通知</div>
+          </div>
+        </div>
       </p>
     </div>
 
     <div class="roles-grid">
       <div class="role-card">
-        <h3>摄影 / 摄像</h3>
-        <p>现场拍摄照片和视频，活动后48小时内发布到所有社媒平台。</p>
+        <h3><span data-lang="zh">摄影 / 摄像</span><span data-lang="en">Photography / Videography</span></h3>
+        <p data-lang="zh">现场拍摄照片和视频，活动后48小时内发布到所有社媒平台。</p>
+        <p data-lang="en">Capture photos and video on the day. Content will be posted across all social platforms within 48 hours.</p>
       </div>
       <div class="role-card">
-        <h3>发言人</h3>
-        <p>分享你的亲身经历，向媒体和路人讲述安调拖延的真实代价。</p>
+        <h3><span data-lang="zh">发言人</span><span data-lang="en">Speaker</span></h3>
+        <p data-lang="zh">分享你的亲身经历，向媒体和路人讲述安调拖延的真实代价。</p>
+        <p data-lang="en">Share your personal story and speak to media and passersby about the real cost of security screening delays.</p>
       </div>
       <div class="role-card">
-        <h3>普通参与者</h3>
-        <p>带着牌子和口号出现在现场，你的存在本身就是最有力的声音。</p>
+        <h3><span data-lang="zh">普通参与者</span><span data-lang="en">Marcher</span></h3>
+        <p data-lang="zh">带着牌子和口号出现在现场，你的存在本身就是最有力的声音。</p>
+        <p data-lang="en">Show up with a sign and your voice. Your presence alone is one of the most powerful things you can do.</p>
       </div>
     </div>
   </div>
@@ -1070,38 +1034,45 @@
 <!-- FAQ -->
 <section class="faq" id="faq">
   <div class="container">
-    <span class="section-label">常见问题 · FAQ</span>
-    <h2>你可能想知道<span class="en">What You Need to Know</span></h2>
+    <span class="section-label"><span data-lang="zh">常见问题 · FAQ</span><span data-lang="en">FAQ</span></span>
+    <h2><span data-lang="zh">你可能想知道<span class="en">What You Need to Know</span></span><span data-lang="en">What You Need to Know</span></h2>
     <div class="divider"></div>
 
     <div class="faq-list">
       <div class="faq-item">
-        <div class="faq-q">活动分为哪两个阶段？有什么区别？</div>
-        <div class="faq-a">第一阶段（9:00–11:00）在 Vancouver Art Gallery 举行，欢迎注册，以便我们统计人数。11:00 从 Art Gallery 出发步行游行至 IRCC 温哥华办公室（1148 Hornby St），IRCC 楼前阶段需要提前注册登记，请通过报名表或邮件联系我们确认。</div>
+        <div class="faq-q"><span data-lang="zh">活动分为哪两个阶段？有什么区别？</span><span data-lang="en">What are the two phases of the event?</span></div>
+        <div class="faq-a" data-lang="zh">第一阶段（9:00–11:00）在 Vancouver Art Gallery 举行，欢迎注册，以便我们统计人数。11:00 从 Art Gallery 出发步行游行至 IRCC 温哥华办公室（1148 Hornby St），IRCC 楼前阶段需要提前注册登记。</div>
+        <div class="faq-a" data-lang="en">Phase 1 (9:00–11:00) takes place at Vancouver Art Gallery — open to all, registration welcome. At 11:00 we march to the IRCC Vancouver office (1148 Hornby St). The IRCC building phase requires pre-registration.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">参加游行安全吗？会影响我的移民申请吗？</div>
-        <div class="faq-a">和平抗议是加拿大宪法保护的合法权利（《权利与自由宪章》第2条）。参与合法抗议不会影响你的移民申请。如有顾虑，你可以不公开面部或姓名。</div>
+        <div class="faq-q"><span data-lang="zh">参加游行安全吗？会影响我的移民申请吗？</span><span data-lang="en">Is it safe to attend? Will it affect my immigration application?</span></div>
+        <div class="faq-a" data-lang="zh">和平抗议是加拿大宪法保护的合法权利（《权利与自由宪章》第2条）。参与合法抗议不会影响你的移民申请。如有顾虑，你可以不公开面部或姓名。</div>
+        <div class="faq-a" data-lang="en">Peaceful protest is a constitutionally protected right in Canada (Charter s. 2). Participating in a lawful protest will not affect your immigration application. If you have concerns, you may choose not to show your face or name publicly.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">会有媒体报道、政府官员支持吗？</div>
-        <div class="faq-a">我们正在积极联络 CBC、CTV Vancouver 等主流媒体争取报道。3·13 渥太华行动已获得两位参议员的公开支持及多家媒体报道，并有数位 MP 表态支持。VAN501 将在此基础上继续推进，一方面与已支持的议员保持沟通争取出席，同时主动联络尚未接触的温哥华地区 MP，争取更多国会议员的公开表态。</div>
+        <div class="faq-q"><span data-lang="zh">会有媒体报道、政府官员支持吗？</span><span data-lang="en">Will there be media coverage or political support?</span></div>
+        <div class="faq-a" data-lang="zh">我们正在积极联络 CBC、CTV Vancouver 等主流媒体争取报道。3·13 渥太华行动已获得两位参议员的公开支持及多家媒体报道，并有数位 MP 表态支持。VAN501 将在此基础上继续推进。</div>
+        <div class="faq-a" data-lang="en">We are actively reaching out to CBC, CTV Vancouver, and other major outlets. The March 13 Ottawa action earned the public support of two senators and several MPs, along with wide media coverage. VAN501 builds on that foundation.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">我没有受到安调拖延，可以参加吗？</div>
-        <div class="faq-a">当然可以！任何支持移民公正的人都欢迎参加，包括 PR 已获批的朋友、公民、留学生，以及关心这个议题的所有人。</div>
+        <div class="faq-q"><span data-lang="zh">我没有受到安调拖延，可以参加吗？</span><span data-lang="en">Can I attend even if I'm not affected by delays?</span></div>
+        <div class="faq-a" data-lang="zh">当然可以！任何支持移民公正的人都欢迎参加，包括 PR 已获批的朋友、公民、留学生，以及关心这个议题的所有人。</div>
+        <div class="faq-a" data-lang="en">Absolutely. Anyone who supports immigration justice is welcome — including those whose PR has already been approved, Canadian citizens, international students, and anyone who cares about this issue.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">活动当天需要准备什么？</div>
-        <div class="faq-a">带上你自己就够了！组织方会提供牌子和传单。建议穿着醒目、舒适的衣物，并根据天气备好雨具。如果你有自制的标语牌，也非常欢迎！</div>
+        <div class="faq-q"><span data-lang="zh">活动当天需要准备什么？</span><span data-lang="en">What should I bring?</span></div>
+        <div class="faq-a" data-lang="zh">带上你自己就够了！有自制标语牌更欢迎。建议穿着醒目、舒适的衣物，并根据天气备好雨具。</div>
+        <div class="faq-a" data-lang="en">Just yourself! Homemade signs are very welcome. Wear comfortable, visible clothing and prepare for Vancouver weather — bring an umbrella just in case.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">活动会说中文还是英文？</div>
-        <div class="faq-a">两者都有。口号和标语以中英双语为主，发言人可自选语言。我们希望活动对所有人都友好。</div>
+        <div class="faq-q"><span data-lang="zh">活动会说中文还是英文？</span><span data-lang="en">Will the event be in Chinese or English?</span></div>
+        <div class="faq-a" data-lang="zh">两者都有。口号和标语以中英双语为主，发言人可自选语言。我们希望活动对所有人都友好。</div>
+        <div class="faq-a" data-lang="en">Both. Chants and signs will be bilingual, and speakers may choose their preferred language. We want the event to be welcoming to everyone.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">如何跟进活动相关信息？</div>
-        <div class="faq-a">请填写报名表，我们会在活动前通过微信群或邮件发送最终提醒和详细信息。</div>
+        <div class="faq-q"><span data-lang="zh">如何跟进活动相关信息？</span><span data-lang="en">How do I stay updated?</span></div>
+        <div class="faq-a" data-lang="zh">请填写报名表或扫码加入微信群，我们会在活动前通过微信群或邮件发送最终提醒和详细信息。</div>
+        <div class="faq-a" data-lang="en">Complete the registration form or join our WeChat group. We'll send final reminders and event details by email and WeChat before May 1.</div>
       </div>
     </div>
   </div>
@@ -1111,16 +1082,11 @@
 <footer>
   <div class="logo-big">VAN501 · 温哥华 5·1 行动</div>
   <div style="color:var(--red); font-family:'DM Serif Display', serif; font-style:italic; margin-top:4px;">Vancouver May 1 Action for PR Justice</div>
-  <div class="social-links">
-    <a href="mailto:bc.pr.delay@gmail.com">📧 bc.pr.delay@gmail.com</a>
-    <a href="#">小红书</a>
-    <a href="https://www.instagram.com/van501.rally/" target="_blank" rel="noopener">Instagram</a>
-    <a href="#">X (Twitter)</a>
-    <a href="#">微信群</a>
-  </div>
-  <p>
-    同一场运动 · <a href="https://chinese-pr-delay.ca/" style="color:var(--gold-light);">PR Justice Now — 3·13 渥太华国会山游行</a><br/>
+  <p data-lang="zh">
     本活动为和平、自发的公民行动，与任何政党无关。<br/>
+    This is a peaceful, independent civic action with no party affiliation.
+  </p>
+  <p data-lang="en">
     This is a peaceful, independent civic action with no party affiliation.
   </p>
   <p style="margin-top:24px; font-size:0.75rem; color:#55453A;">
@@ -1133,100 +1099,95 @@
   <div class="letter-modal" id="letterModal">
     <div class="letter-modal-header">
       <div>
-        <div class="letter-modal-title">✉️ 给你的国会议员写信 · Write to Your MP</div>
-        <div class="letter-modal-subtitle">编辑后复制发送，或直接通过邮件客户端发出</div>
+        <div class="letter-modal-title">✉️ <span data-lang="zh">给你的国会议员写信 · Write to Your MP</span><span data-lang="en">Write to Your MP</span></div>
+        <div class="letter-modal-subtitle"><span data-lang="zh">编辑后复制发送，或直接通过邮件客户端发出</span><span data-lang="en">Edit, copy, and send — or open directly in your mail client</span></div>
       </div>
       <button class="letter-close-btn" onclick="closeLetterModal()">✕</button>
     </div>
     <div class="letter-modal-body">
-
-
-      <!-- Sender name -->
       <div class="letter-meta">
-        <label>你的姓名 / Your Name</label>
+        <label><span data-lang="zh">你的姓名 / Your Name</span><span data-lang="en">Your Name</span></label>
         <input type="text" id="senderName" placeholder="Your full name" oninput="updateLetter()" />
       </div>
-
-      <!-- TO block -->
       <div class="letter-to-block" id="letterTo"></div>
-
-      <!-- Subject -->
       <div class="letter-subject-row">
-        <div class="letter-subject-label">Subject / 主题</div>
+        <div class="letter-subject-label">Subject</div>
         <div class="letter-subject-val" id="letterSubject"></div>
       </div>
-
-      <!-- Body -->
-      <textarea class="letter-body-area" id="letterBody" oninput=""></textarea>
-      <p class="letter-note">💡 请根据你的实际情况修改信件内容，加入你的个人经历会更有说服力。<br/>Feel free to personalize — sharing your own story makes the letter much more powerful.</p>
+      <textarea class="letter-body-area" id="letterBody"></textarea>
+      <p class="letter-note" data-lang="zh">💡 请根据你的实际情况修改信件内容，加入你的个人经历会更有说服力。</p>
+      <p class="letter-note" data-lang="en">💡 Feel free to personalize — sharing your own story makes the letter much more powerful.</p>
     </div>
     <div class="letter-modal-footer">
       <button class="letter-copy-btn" id="copyBtn" onclick="copyLetter()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        复制信件 / Copy Letter
+        <span data-lang="zh">复制信件 / Copy Letter</span><span data-lang="en">Copy Letter</span>
       </button>
-      <a class="letter-email-btn" id="emailBtn" href="#" target="_blank">
+      <a class="letter-email-btn" id="emailBtn" href="#">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
-        通过邮件发送 / Open in Mail
+        <span data-lang="zh">通过邮件发送 / Open in Mail</span><span data-lang="en">Open in Mail</span>
       </a>
-      <div class="letter-footer-note">数据来源 ourcommons.ca</div>
+      <div class="letter-footer-note"><span data-lang="zh">数据来源 ourcommons.ca</span><span data-lang="en">Source: ourcommons.ca</span></div>
     </div>
   </div>
 </div>
 
 <script>
-// ─── State ───────────────────────────────────────────────
-let currentMP = null;
-let currentLang = 'en';
+// ─── Language switcher ────────────────────────────────────
+function setLang(lang) {
+  document.body.className = document.body.className.replace(/lang-\w+/, '').trim() + ' lang-' + lang;
+  document.getElementById('btnZh').classList.toggle('active', lang === 'zh');
+  document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang === 'zh' ? 'zh' : 'en';
+  localStorage.setItem('van501-lang', lang);
+}
 
-// ─── Generate Letter from manual inputs ──────────────────
+// Restore saved language preference
+(function() {
+  var saved = localStorage.getItem('van501-lang');
+  if (saved && saved !== 'en') setLang(saved);
+})();
+
+// ─── WeChat popup toggle ──────────────────────────────────
+function toggleWechat(popupId, btnId) {
+  var popup = document.getElementById(popupId);
+  var isOpen = popup.classList.contains('open');
+  document.querySelectorAll('.wechat-popup.open').forEach(function(p) { p.classList.remove('open'); });
+  if (!isOpen) {
+    popup.classList.add('open');
+    setTimeout(function() {
+      document.addEventListener('click', function closeHandler(e) {
+        if (!e.target.closest('.wechat-trigger') && !e.target.closest('.wechat-popup')) {
+          document.querySelectorAll('.wechat-popup.open').forEach(function(p) { p.classList.remove('open'); });
+          document.removeEventListener('click', closeHandler);
+        }
+      });
+    }, 10);
+  }
+}
+
+// ─── Letter generation ────────────────────────────────────
+var currentMP = null;
+
 function generateLetter() {
-  const sender = document.getElementById('senderNameMain').value.trim();
-  const mpName = document.getElementById('mpNameInput').value.trim();
-  const mpEmail = document.getElementById('mpEmailInput').value.trim();
-  const mpRiding = document.getElementById('mpRidingInput').value.trim();
-
+  var sender = document.getElementById('senderNameMain').value.trim();
+  var mpName = document.getElementById('mpNameInput').value.trim();
+  var mpEmail = document.getElementById('mpEmailInput').value.trim();
+  var mpRiding = document.getElementById('mpRidingInput').value.trim();
   if (!mpName) {
-    const el = document.getElementById('mpNameInput');
-    el.focus();
-    el.style.borderColor = '#FF7070';
-    setTimeout(() => el.style.borderColor = '', 2000);
+    var el = document.getElementById('mpNameInput');
+    el.focus(); el.style.borderColor = '#FF7070';
+    setTimeout(function() { el.style.borderColor = ''; }, 2000);
     return;
   }
-
   currentMP = { name: mpName, email: mpEmail, riding: mpRiding };
   openLetterModal(sender);
 }
 
-// ─── Letter Templates ─────────────────────────────────────
-const letters = {
-
-  en: {
-    subject: (mp) => `Urgent Request: End Indefinite Delays in PR Security Background Checks`,
-    body: (mp, sender) => `Dear ${mp.name || 'Member of Parliament'},
-
-I am writing to you as a constituent in your riding to express serious concern about the indefinite delays in security background checks (SBC) affecting Permanent Resident (PR) applications processed by Immigration, Refugees and Citizenship Canada (IRCC).
-
-Over 23,000 PR applications are currently stalled due to security background checks, with average wait times exceeding 30 months — far beyond IRCC's official service standard of 110 days. These delays have left applicants in prolonged uncertainty, causing family separation, interrupted careers, and significant mental health impacts.
-
-I am aware that on March 13, 2026, hundreds of affected residents marched to Parliament Hill in Ottawa alongside e-petition e-7259, which received the public support of two senators and drew coverage from multiple mainstream media outlets. Several MPs across the country have already expressed their support for this cause.
-
-A new e-petition, e-7341, is currently open for signatures. It calls on the House of Commons Standing Committee on Public Safety and National Security to undertake a formal study on immigration security screening delays.
-
-I respectfully urge you to:
-
-1. Publicly support the establishment of clear, enforceable processing timelines (e.g., CBSA to complete final processing within 30 days after CSIS review is complete);
-2. Advocate for IRCC to proactively and regularly update applicants on their case status;
-3. Support the creation of an independent accountability mechanism for IRCC, CSIS, and CBSA;
-4. Consider formally raising this issue in Parliament and supporting a committee study on security screening delays.
-
-Thank you sincerely for your time and consideration. Your support would give hope to thousands of families who have been waiting far too long.
-
-Sincerely,
-
-${sender || '[Your Name]'}
-[Your Address]
-[Your Contact Information]`
+var letterTemplate = {
+  subject: function(mp) { return 'Urgent Request: End Indefinite Delays in PR Security Background Checks'; },
+  body: function(mp, sender) {
+    return 'Dear ' + (mp.name || 'Member of Parliament') + ',\n\nI am writing to you as a constituent in your riding to express serious concern about the indefinite delays in security background checks (SBC) affecting Permanent Resident (PR) applications processed by Immigration, Refugees and Citizenship Canada (IRCC).\n\nOver 23,000 PR applications are currently stalled due to security background checks, with average wait times exceeding 30 months — far beyond IRCC\'s official service standard of 110 days. These delays have left applicants in prolonged uncertainty, causing family separation, interrupted careers, and significant mental health impacts.\n\nI am aware that on March 13, 2026, hundreds of affected residents marched to Parliament Hill in Ottawa alongside e-petition e-7259, which received the public support of two senators and drew coverage from multiple mainstream media outlets. Several MPs across the country have already expressed their support for this cause.\n\nA new e-petition, e-7341, is currently open for signatures. It calls on the House of Commons Standing Committee on Public Safety and National Security to undertake a formal study on immigration security screening delays.\n\nI respectfully urge you to:\n\n1. Publicly support the establishment of clear, enforceable processing timelines (e.g., CBSA to complete final processing within 30 days after CSIS review is complete);\n2. Advocate for IRCC to proactively and regularly update applicants on their case status;\n3. Support the creation of an independent accountability mechanism for IRCC, CSIS, and CBSA;\n4. Consider formally raising this issue in Parliament and supporting a committee study on security screening delays.\n\nThank you sincerely for your time and consideration. Your support would give hope to thousands of families who have been waiting far too long.\n\nSincerely,\n\n' + (sender || '[Your Name]') + '\n[Your Address]\n[Your Contact Information]';
   }
 };
 
@@ -1247,57 +1208,44 @@ function closeLetterOnBackdrop(e) {
   if (e.target === document.getElementById('letterOverlay')) closeLetterModal();
 }
 
-function switchLang(lang) {
-  currentLang = lang;
-  document.getElementById('btnEn').classList.toggle('active', lang === 'en');
-  updateLetter();
-}
-
 function updateLetter() {
   if (!currentMP) return;
-  const sender = document.getElementById('senderName').value.trim();
-  const tpl = letters[currentLang];
-
+  var sender = document.getElementById('senderName').value.trim();
   document.getElementById('letterTo').innerHTML =
-    `<strong>To:</strong> ${currentMP.name || 'Member of Parliament'}` +
-    (currentMP.riding ? `<br/><strong>Riding:</strong> ${currentMP.riding}` : '') +
+    '<strong>To:</strong> ' + (currentMP.name || 'Member of Parliament') +
+    (currentMP.riding ? '<br/><strong>Riding:</strong> ' + currentMP.riding : '') +
     (currentMP.email
-      ? `<br/><strong>Email:</strong> ${currentMP.email}`
-      : `<br/><em style="color:var(--gray)">Email: check MP profile at ourcommons.ca</em>`);
-
-  const subject = tpl.subject(currentMP);
+      ? '<br/><strong>Email:</strong> ' + currentMP.email
+      : '<br/><em style="color:var(--gray)">Email: check MP profile at ourcommons.ca</em>');
+  var subject = letterTemplate.subject(currentMP);
   document.getElementById('letterSubject').textContent = subject;
-
-  const body = tpl.body(currentMP, sender);
-  document.getElementById('letterBody').value = body;
-
-  const emailEl = document.getElementById('emailBtn');
+  document.getElementById('letterBody').value = letterTemplate.body(currentMP, sender);
+  var emailEl = document.getElementById('emailBtn');
   if (currentMP.email) {
-    emailEl.href = `mailto:${currentMP.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    emailEl.style.opacity = '1';
-    emailEl.style.pointerEvents = 'auto';
+    emailEl.href = 'mailto:' + currentMP.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(letterTemplate.body(currentMP, sender));
+    emailEl.style.opacity = '1'; emailEl.style.pointerEvents = 'auto';
   } else {
-    emailEl.href = `https://www.ourcommons.ca/members/en/search?searchText=${encodeURIComponent(currentMP.name || '')}`;
+    emailEl.href = 'https://www.ourcommons.ca/members/en/search?searchText=' + encodeURIComponent(currentMP.name || '');
     emailEl.style.opacity = '0.6';
   }
 }
 
 function copyLetter() {
-  const subject = document.getElementById('letterSubject').textContent;
-  const body = document.getElementById('letterBody').value;
-  const full = `Subject: ${subject}\n\n${body}`;
-
-  navigator.clipboard.writeText(full).then(() => {
-    const btn = document.getElementById('copyBtn');
+  var subject = document.getElementById('letterSubject').textContent;
+  var body = document.getElementById('letterBody').value;
+  var full = 'Subject: ' + subject + '\n\n' + body;
+  navigator.clipboard.writeText(full).then(function() {
+    var btn = document.getElementById('copyBtn');
     btn.classList.add('copied');
-    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 已复制！/ Copied!`;
-    setTimeout(() => {
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> <span data-lang="zh">已复制！</span><span data-lang="en">Copied!</span>';
+    setTimeout(function() {
       btn.classList.remove('copied');
-      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> 复制信件 / Copy Letter`;
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-lang="zh">复制信件 / Copy Letter</span><span data-lang="en">Copy Letter</span>';
+      // re-apply lang visibility
+      setLang(document.body.className.includes('lang-en') ? 'en' : 'zh');
     }, 2500);
   });
 }
-
 </script>
 
 </body>
